@@ -24,6 +24,7 @@ public class Swing extends MeleeEntity {
 	public Swing(Shape shape, World world, double swingAngle, int swingDuration, GameAgent owner, int damage) {
 		super(owner.position, shape, world, owner, swingDuration + 5, swingDuration, damage, Color.green);
 		shape.rotate(new Vector2D(1, 0).angleTo(owner.heading) - swingAngle / 2);
+		setHeading(heading.rotate(new Vector2D(1, 0).angleTo(owner.heading) - swingAngle / 2));
 		swingEnd = world.time + swingDuration;
 		swingSpeed = swingAngle / swingDuration;
 		this.swingAngle = swingAngle;
@@ -54,7 +55,7 @@ public class Swing extends MeleeEntity {
 		System.out.println(rotation);
 		Graphics2D g2d = (Graphics2D) (g);
 		
-		g2d.rotate(rotation+owner.rotation+Math.PI,position.x,position.y);
+		g2d.rotate(rotation-Math.PI/2,position.x,position.y);
 		
 		g2d.scale(3, 3);
 
@@ -75,7 +76,7 @@ public class Swing extends MeleeEntity {
 		}
 		
 		g2d.scale(1.0/3.0,1.0/3.0);
-		g2d.rotate(-owner.rotation-rotation-Math.PI,position.x,position.y);
+		g2d.rotate(-rotation+Math.PI/2,position.x,position.y);
 	}
 
 }

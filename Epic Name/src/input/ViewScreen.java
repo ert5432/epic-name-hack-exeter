@@ -102,7 +102,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 			}
    		};
 		world.addEntity(g1);
-		g1.setWeapon(new PowerRod(g1));
+		g1.setWeapon(new Sword(g1));
 		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,30,30,100)){
 			public void update(double time){
 				super.update(time);
