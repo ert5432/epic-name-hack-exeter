@@ -6,18 +6,21 @@ import geometry.Vector2D;
 
 import java.util.ArrayList;
 
+import world.World;
+
 public class Level {
 	ArrayList<Room> rooms=new ArrayList<Room>();
 	ArrayList<DoorWay> doorPoints=new ArrayList<DoorWay>();
 	
 	public Level(){
-		rooms.add(new Room(-200,-200,400,400,"",0));
+		rooms.add(new Room(0,0,400,400,"rooms/test1.png",0));
+		countOpenings();
 	}
 	
 	public boolean testRoomFit(String r,int loc){
 		countOpenings();
 		int[] im=MapReader.readImage(r);
-		int width=im[im.length-2],height=im[im.length-1];
+		int width=(1+im[im.length-2])*40,height=(im[im.length-1]+1)*40;
 		DoorWay dw=doorPoints.get(loc);
 		Rectangle rec=new Rectangle(0,0,0,0);
 		if(dw.dir==0)
@@ -38,7 +41,7 @@ public class Level {
 	
 	public void addRoom(String r,int loc){
 		int[] im=MapReader.readImage(r);
-		int width=im[im.length-2],height=im[im.length-1];
+		int width=(1+im[im.length-2])*40,height=(im[im.length-1]+1)*40;
 		DoorWay dw=doorPoints.get(loc);
 		Rectangle rec=new Rectangle(0,0,0,0);
 		if(dw.dir==0)
@@ -83,5 +86,13 @@ public class Level {
 		if(i==1)
 				return true;
 		return false;
+	}
+
+	public World toWorld() {
+		World w=new World();
+		for(Room r:rooms){
+			MapReader.readMap(r.map, w, r.x, r.y);
+		}
+		return w;
 	}
 }

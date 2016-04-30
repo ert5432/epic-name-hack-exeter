@@ -139,8 +139,7 @@ public class MapReader {
 		frame.pack();
 		frame.setVisible(true);
 		
-		vs.world=new World();
-		readMap("map1.png", vs.world);
+		vs.world=LevelGenerator.generate(0);
 		System.out.println(vs.world.getWalls().size());
 	}
 	
