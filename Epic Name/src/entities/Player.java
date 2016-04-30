@@ -10,6 +10,7 @@ import graphics.Animation;
 import graphics.*;
 
 import stats.Stats;
+import weapons.Weapon;
 import geometry.Shape;
 import geometry.Vector2D;
 import world.World;
@@ -27,6 +28,7 @@ public class Player extends GameAgent{
 	private BufferedImage[] walking= {sprite.getSprite(0, 0),sprite.getSprite(1, 0) };
 	private Animation walkingAnim = new Animation(walking, 15);
 	
+	public Weapon[] inventory=new Weapon[4];
 	
 	public Player(Vector2D position,Shape shape,World world,Stats stats){
 		super(position,shape,world,stats);
@@ -101,5 +103,20 @@ public class Player extends GameAgent{
 			theta=-maxTurnSpeed*time;
 		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
+	}
+	
+	public void addToInventory(Weapon w){
+		for(int i=0;i<inventory.length;i++){
+			if(inventory[i]==null){
+				inventory[i]=w;
+				break;
+			}
+			else if(i==inventory.length-1){
+				inventory[0]=w;
+			}
+		}
+		if(weapon==null){
+			setWeapon(w);
+		}
 	}
 }

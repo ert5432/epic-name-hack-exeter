@@ -104,7 +104,9 @@ public class ViewScreen extends JPanel implements ActionListener{
 		world.addWall(new Wall(new Rectangle(750,960,1500,20)));
    		world.player=new Player(new Vector2D(500,500),new Circle(20), world, new Stats(30,30,40,40,100000));
 		world.addEntity(world.player);
-		world.player.setWeapon(new Sword(world.player));
+		world.player.addToInventory(new Sword(world.player));
+		world.player.addToInventory(new Bow(world.player));
+		world.player.addToInventory(new PowerRod(world.player));
 		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,30,30,100)){
 			public void update(double time){
 				super.update(time);
@@ -226,21 +228,25 @@ public class ViewScreen extends JPanel implements ActionListener{
 		addAction(KeyEvent.VK_1,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				hotBarSelected=0;
+				world.player.setWeapon(world.player.inventory[0]);
 			}
 		});
 		addAction(KeyEvent.VK_2,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				hotBarSelected=1;
+				world.player.setWeapon(world.player.inventory[1]);
 			}
 		});
 		addAction(KeyEvent.VK_3,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				hotBarSelected=2;
+				world.player.setWeapon(world.player.inventory[2]);
 			}
 		});
 		addAction(KeyEvent.VK_4,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				hotBarSelected=3;
+				world.player.setWeapon(world.player.inventory[3]);
 			}
 		});
 	}

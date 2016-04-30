@@ -20,7 +20,7 @@ public class GameAgent extends GameEntity{
 	protected int coolDown;
 	public int hp;
 	public Stats stats;
-	private Weapon weapon;
+	protected Weapon weapon;
 	private ActionInfo[] actionList=new ActionInfo[0];
 	protected Action curAction=null;
 	private boolean dead;
@@ -113,7 +113,10 @@ public class GameAgent extends GameEntity{
 	
 	public void setWeapon(Weapon w){
 		weapon=w;
-		loadActionList(w.getAttacks());
+		if(weapon!=null)
+			loadActionList(w.getAttacks());
+		else
+			loadActionList(new ActionInfo[0]);
 	}
 	
 	public Weapon getWeapon(){
