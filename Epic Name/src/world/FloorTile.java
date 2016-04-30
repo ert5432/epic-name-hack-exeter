@@ -30,6 +30,7 @@ public class FloorTile {
 		
 		g2d.scale(2.5, 2.5);
 		g2d.drawImage(image,x,y,null);
+		g2d.scale(1.0/2.5, 1.0/2.5);
 	}
 
 }
