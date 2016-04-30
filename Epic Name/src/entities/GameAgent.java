@@ -70,16 +70,8 @@ public class GameAgent extends GameEntity{
 	}
 	
 	public void update(double time){
-		Vector2D agentNormal=world.intersectAgentNormal(shape.translate(velocity),this);
-		if(agentNormal!=null){
-			Vector2D agentForce=agentNormal.normalize().mult(Math.abs(velocity.add(acceleration.mult(time)).dot(agentNormal.negative()))/agentNormal.magnitude()*mass*2);
-			this.applyForce(agentForce);
-		}
-		Vector2D wallNormal=world.intersectsWallNormal(shape.translate(velocity));
-		if(wallNormal!=null){
-			Vector2D wallForce=wallNormal.normalize().mult(Math.abs(velocity.add(acceleration.mult(time)).dot(wallNormal.negative()))/wallNormal.magnitude()*mass*2);
-			this.applyForce(wallForce);
-		}
+		world.handleCollisions(this);
+		
 		super.update(time);
 		shape.setPosition(position);
 		rotateHeadingtoVelocity(time);

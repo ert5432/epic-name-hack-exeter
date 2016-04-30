@@ -4,13 +4,13 @@ import geometry.Vector2D;
 
 public class MobileEntity extends PositionEntity{
 
-	protected Vector2D velocity;
-	protected Vector2D acceleration=new Vector2D(0,0);
+	public Vector2D velocity;
+	public Vector2D acceleration=new Vector2D(0,0);
 	protected double maxVelocity;
 	protected double maxTurnSpeed;
 	protected double maxAcceleration;
 	protected double maxForce;
-	protected double mass;
+	public double mass;
 	
 	public MobileEntity(double x,double y,double mass){
 		super(new Vector2D(x,y));

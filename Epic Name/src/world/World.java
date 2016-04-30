@@ -128,6 +128,19 @@ public class World implements Renderable{
 			return resultingNormal.normalize();
 	}
 	
+	public void handleCollisions(GameAgent agent){
+		Vector2D agentNormal=intersectAgentNormal(agent.shape.clone(),agent);
+		if(agentNormal!=null){
+			Vector2D agentForce=agentNormal.normalize().mult(Math.abs(agent.getVelocity().add(agent.acceleration.mult(time)).dot(agentNormal.negative()))/agentNormal.magnitude()*agent.mass*2);
+			agent.applyForce(agentForce);
+		}
+		for(Wall w:walls){
+			if(w.contains(agent.shape)){
+				w.handleCollision(agent);
+			}
+		}
+	}
+	
 	public void render(Graphics g){
 		long start=System.nanoTime();
 		for(Entity e:entities){

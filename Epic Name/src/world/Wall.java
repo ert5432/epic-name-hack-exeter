@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
+import entities.GameAgent;
 import geometry.Line;
 import geometry.Polygon;
 import geometry.Shape;
@@ -95,5 +96,13 @@ public class Wall implements Renderable{
 			
 		}
 		return normals;
+	}
+
+	public void handleCollision(GameAgent agent) {
+		Vector2D normal=getNormal(agent.shape);
+		if(normal!=null&&!normal.isZeroed()){
+			Vector2D impulse=normal.normalize().mult(Math.abs(agent.velocity.dot(normal.negative()))/normal.magnitude()*2);
+			agent.applyForce(impulse.mult(agent.mass));
+		}
 	}
 }
