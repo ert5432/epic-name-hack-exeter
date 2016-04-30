@@ -125,10 +125,14 @@ public class GameAgent extends GameEntity{
 	}
 	
 	public void act(int i){
-		if(curAction==null&&i>=0&&i<actionList.length&&!dead){
+		if(canAct()&&i>=0&&i<actionList.length){
 			curAction=actionList[i].createAction(this, world);
 			curAction.begin();
 		}
+	}
+	
+	public boolean canAct(){
+		return curAction==null&&!isDead();
 	}
 	
 	public void exitAction(){

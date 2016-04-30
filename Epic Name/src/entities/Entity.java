@@ -1,10 +1,7 @@
 package entities;
 
-public abstract class Entity{
-
-	public Entity(){
-		
-	}
+public interface Entity{
 	
 	public abstract void update(double time);
+
 }
