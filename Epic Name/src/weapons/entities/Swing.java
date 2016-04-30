@@ -35,6 +35,7 @@ public class Swing extends MeleeEntity{
 		this.position=owner.position;
 		shape.setPosition(position);
 		shape.rotate(swingSpeed*time);
+		setHeading(heading.rotate(swingSpeed*time));
 	}
 	
 	public void addCopytoWorld(World world,Vector2D position,GameAgent owner,int damage){
