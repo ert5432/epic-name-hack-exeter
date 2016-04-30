@@ -13,16 +13,26 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import stats.Stats;
+import entities.Ant;
+import entities.Beholder;
 import entities.Entity;
+import entities.GameAgent;
+import entities.GoblinArcher;
+import entities.GoblinFighter;
 import entities.Player;
 import geometry.Circle;
 import geometry.Polygon;
 import geometry.Rectangle;
+import geometry.Vector2D;
+import weapons.Sword;
 import world.BlockWall;
 import world.Wall;
 import world.World;
 
 public class MapReader {
+	
+	public static final int ANT=0,BEHOLDER=1,GOBLIN_ARCHER=2,GOBLIN_FIGHTER=3;
+	
 	public static int level=0;
 	public static int[] readImage(String file){
 		
@@ -93,28 +103,32 @@ public class MapReader {
 				}
 				
 				case 0xff0000:{
+					if(world.player==null){
 					world.player=new Player(x+20,y+20,new Circle(20),world,new Stats(30,30,40,40,100000));
+					world.player.addToInventory(new Sword(world.player));
+					}
+					world.player.position=new Vector2D(x+20,y+20);
 					entities.add(world.player);
 					break;
 				}
 			}
 			
-			if(layout[i]==0)
-				wallMade=true;
-			else
-				wallMade=false;
+//			if(layout[i]==0)
+//				wallMade=true;
+//			else
+//				wallMade=false;
 		}
-		
-		boolean complete=true;
-		do{
-		complete=true;
-		for(int i=0;i<walls.size()-1;i++){
-			for(int b=i+1;b<walls.size();b++){
-				if(walls.get(i).merge(walls.get(b)))
-					complete=false;
-			}
-		}
-		}while(!complete);
+//		
+//		boolean complete=true;
+//		do{
+//		complete=true;
+//		for(int i=0;i<walls.size()-1;i++){
+//			for(int b=i+1;b<walls.size();b++){
+//				if(walls.get(i).merge(walls.get(b)))
+//					complete=false;
+//			}
+//		}
+//		}while(!complete);
 		
 		for(Entity e:entities){
 			world.addEntity(e);
@@ -127,8 +141,23 @@ public class MapReader {
 		}
 	}
 	
-	public static void spawnMonster(int x,int y,int id){
-		
+	public static void spawnMonster(int x,int y,int id,World world){
+		GameAgent monster = null;
+		switch(id){
+		case ANT:{
+			monster=new Ant(x, y, world);
+		}
+		case GOBLIN_ARCHER:{
+			monster=new GoblinArcher(x,y,world);
+		}
+		case GOBLIN_FIGHTER:{
+			monster=new GoblinFighter(x,y,world);
+		}
+		case BEHOLDER:{
+			monster=new Beholder(x,y,world);
+		}
+		}
+		world.addEntity(monster);
 	}
 	
 	public static void main(String args[]){
