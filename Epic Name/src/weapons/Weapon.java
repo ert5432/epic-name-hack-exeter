@@ -31,4 +31,6 @@ public abstract class Weapon {
 		if(image!=null)
 			g.drawImage(image, x, y, null);
 	}
+	
+	public abstract boolean isRanged();
 }

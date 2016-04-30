@@ -20,4 +20,10 @@ public class Stone extends Weapon{
 			});
 	}
 
+	@Override
+	public boolean isRanged() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

@@ -29,6 +29,9 @@ public class Charging extends State {
 		if(agent.canAct()&&agent.position.distanceTo(target.position)<100){
 			agent.act(1);
 		}
+		if(agent.position.distanceTo(target.position)>1000){
+			sm.changeState(new WaitForPlayer(agent,sm,target));
+		}
 	}
 
 	@Override
