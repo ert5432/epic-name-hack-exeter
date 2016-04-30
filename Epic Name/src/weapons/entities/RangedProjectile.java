@@ -56,9 +56,9 @@ public class RangedProjectile extends Projectile{
 		System.out.println(rotation);
 		Graphics2D g2d = (Graphics2D) (g);
 		
-		g2d.rotate(rotation+owner.rotation+Math.PI,position.x,position.y);
+		g2d.rotate(rotation,position.x,position.y);
 		
-		g2d.scale(3, 3);
+		g2d.scale(2, 2);
 
 		System.out.println("sword");
 		
@@ -68,7 +68,7 @@ public class RangedProjectile extends Projectile{
 			
 			
 			
-			g2d.drawImage(image,(int)((position.x)/3.0),(int)((position.y+10)/3.0),null);
+			g2d.drawImage(image,(int)((position.x)/2.0),(int)((position.y+10)/2.0),null);
 			
 			
 		} catch (IOException e) {
@@ -76,7 +76,7 @@ public class RangedProjectile extends Projectile{
 			e.printStackTrace();
 		}
 		
-		g2d.scale(1.0/3.0,1.0/3.0);
-		g2d.rotate(-owner.rotation-rotation-Math.PI,position.x,position.y);
+		g2d.scale(.5,.5);
+		g2d.rotate(-rotation,position.x,position.y);
 	}
 }

@@ -21,7 +21,7 @@ public abstract class MeleeEntity extends WeaponEntity {
 
 	public void update(double time){
 		super.update(time);
-		boolean flag=world.findIntersectedWall(shape.translate(velocity))==null&&!owner.isDead();
+		boolean flag=!owner.isDead();
 		if(flag){
 			if(!hasHit&&!lastHit.isEmpty()){
 				lastHit.get(0).damage(damage);
