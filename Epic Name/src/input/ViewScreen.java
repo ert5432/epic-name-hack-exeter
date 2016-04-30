@@ -116,6 +116,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 		g2.setWeapon(new PowerRod(world.player));
 		world.addEntity(g2);
 		g3=new Ant(600,600,new Circle(32),world,new Stats(30,30,30,30,100));
+		g3.setWeapon(new PowerRod(g3));
+		
 		StateMachine sm=((StateAgent)g3).getStateMachine();
 		sm.changeState(new Charging(g3,sm,world.player));
 		world.addEntity(g3);
