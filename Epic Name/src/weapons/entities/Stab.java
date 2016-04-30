@@ -43,6 +43,7 @@ public class Stab extends MeleeEntity{
 		shape.setPosition(position);
 		shape.rotate(direction.angleTo(owner.heading));
 		direction=owner.heading.normalize();
+		setHeading(direction.clone());
 	}
 
 	public void addCopytoWorld(World world,Vector2D position,GameAgent owner,int damage){
