@@ -4,7 +4,7 @@ import geometry.Vector2D;
 
 import java.awt.Polygon;
 
-public abstract class PositionEntity extends Entity{
+public abstract class PositionEntity implements Entity{
 
 	public Vector2D position;
 	

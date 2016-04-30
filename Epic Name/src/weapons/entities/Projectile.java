@@ -46,7 +46,7 @@ public class Projectile extends WeaponEntity {
 	
 	public void rotateHeadingtoVelocity(double time){
 		double theta=heading.angleTo(velocity);
-		heading=heading.rotate(theta);
+		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
 	}
 	

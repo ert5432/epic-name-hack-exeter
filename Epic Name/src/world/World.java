@@ -134,7 +134,6 @@ public class World implements Renderable{
 			Vector2D agentForce=agentNormal.normalize().mult(Math.abs(agent.getVelocity().add(agent.acceleration.mult(time)).dot(agentNormal.negative()))/agentNormal.magnitude()*agent.mass*1);
 			agent.applyForce(agentForce);
 		}
-		System.out.println(time);
 		Vector2D wallNormal=intersectsWallNormal(agent.shape.translate(agent.velocity));
 		if(wallNormal!=null){
 			Vector2D wallForce=wallNormal.normalize().mult(Math.abs(agent.velocity.add(agent.acceleration.mult(time)).dot(wallNormal.negative()))/wallNormal.magnitude()*agent.mass*1);
