@@ -14,5 +14,7 @@ public class Room {
 		this.width=width;
 		this.height=height;
 		this.map=map;
+		
+		room=new Rectangle(x+width/2,y+height/2,width,height);
 	}
 }
