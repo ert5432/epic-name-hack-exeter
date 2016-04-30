@@ -1,26 +1,21 @@
 package maps;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import geometry.Rectangle;
 import world.World;
 
 public class LevelGenerator {
 	
 	
-	public static World generate(){
+	public static World generate(long seed){
+		Random r=new Random();
+		Level l=new Level();
+		
+		
+		
 		return null;
 	}
 	
-}
-class Tile{
-	public int x,y,width,height;
-	public Rectangle room;
-	String map;
-	
-	public Tile(int x,int y,int width,int height,String map){
-		this.x=x;
-		this.y=y;
-		this.width=width;
-		this.height=height;
-		this.map=map;
-	}
 }
