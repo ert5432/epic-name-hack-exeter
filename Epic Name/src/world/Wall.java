@@ -2,7 +2,13 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import entities.GameAgent;
 import geometry.Line;
@@ -13,16 +19,25 @@ import graphics.Renderable;
 
 public class Wall implements Renderable{
 
+	public static BufferedImage image=loadImage();
 	private Line[] sides;
 	private Polygon shape;
 	private Vector2D[] normals;
 	private Color color;
+	private int minX=Integer.MAX_VALUE,minY=Integer.MAX_VALUE,maxX=Integer.MIN_VALUE,maxY=Integer.MIN_VALUE;
 	
 	public Wall(Polygon shape,Color c) {
 		sides=shape.toLines();
 		this.shape=shape;
 		normals=calculateNormals(sides);
 		color=c;
+		for(Vector2D v:shape.points){
+			minX=(int) Math.min(minX, v.x);
+			minY=(int) Math.min(minY, v.y);
+			maxX=(int) Math.max(maxX, v.x);
+			maxY=(int) Math.max(maxY, v.y);
+		}
+		Vector2D v=shape.getPosition();
 	}
 
 	public Wall(Polygon shape){
@@ -30,11 +45,26 @@ public class Wall implements Renderable{
 		this.shape=shape;
 		normals=calculateNormals(sides);
 		color=Color.black;
+		for(Vector2D v:shape.points){
+			minX=(int) Math.min(minX, v.x);
+			minY=(int) Math.min(minY, v.y);
+			maxX=(int) Math.max(maxX, v.x);
+			maxY=(int) Math.max(maxY, v.y);
+		}
 	}
 	
 	public void render(Graphics g){
-		g.setColor(color);
-		shape.render(g);
+		System.out.println("hey");
+		Graphics2D g2d=(Graphics2D)g;
+		
+		int x=(int) (shape.getPosition().x+minX),y=(int) (shape.getPosition().y+minY),width=maxX-minX,height=maxY-minY;
+		for(int i=x;i<x+width;i+=40){
+			for(int j=y;j<y+height;j+=40){
+				g2d.scale(5, 5);
+				g2d.drawImage(image, i/5, j/5, null);
+				g2d.scale(1/5.0, 1/5.0);
+			}
+		}
 	}
 	
 	public Shape getShape(){
@@ -100,5 +130,16 @@ public class Wall implements Renderable{
 	
 	public void setShape(Polygon s){
 		shape=s;
+	}
+	
+	public static BufferedImage loadImage(){
+		BufferedImage image=null;
+		try {
+			image = ImageIO.read(new File("res/wall.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return image;
 	}
 }
