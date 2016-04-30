@@ -1,6 +1,7 @@
 package weapons;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import actions.attacks.Attack;
@@ -14,7 +15,7 @@ public abstract class Weapon {
 	private GameAgent owner;
 	private AttackInfo[] attacks;
 	private int numAttacks;
-	
+	protected BufferedImage image;
 	
 	public Weapon(GameAgent owner,AttackInfo[] attacks) {
 		this.owner=owner;
@@ -26,7 +27,8 @@ public abstract class Weapon {
 		return attacks;
 	}
 	
-	public void renderSprite(Graphics g){
-		
+	public void renderSprite(Graphics g,int x,int y){
+		if(image!=null)
+			g.drawImage(image, x, y, null);
 	}
 }
