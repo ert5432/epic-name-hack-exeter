@@ -70,7 +70,7 @@ public class GameAgent extends GameEntity{
 	}
 	
 	public void update(double time){
-		world.handleCollisions(this);
+		world.handleCollisions(this,time);
 		
 		super.update(time);
 		shape.setPosition(position);
