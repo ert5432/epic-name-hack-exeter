@@ -14,16 +14,21 @@ import geometry.Vector2D;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -61,6 +66,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 	private boolean planningRoute=false;
 	private Map<Integer, Action> actionMap = new HashMap<Integer, Action>();
 	private Input input;
+	private int hotBarSelected=0;
 	protected int mouseX,mouseY;
 	long totalUpdate=0,totalRender=0;
 	Player g2;
@@ -217,28 +223,22 @@ public class ViewScreen extends JPanel implements ActionListener{
 		});
 		addAction(KeyEvent.VK_1,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
-				g2.act(2);
+				hotBarSelected=0;
 			}
 		});
 		addAction(KeyEvent.VK_2,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
-				if(planningRoute){
-					planningRoute=false;
-					patrol=new LinePath(path.toArray(new Vector2D[path.size()]));
-					steer=new FollowPath(g3,patrol);
-				}
+				hotBarSelected=1;
 			}
 		});
 		addAction(KeyEvent.VK_3,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
-				planningRoute=true;
+				hotBarSelected=2;
 			}
 		});
 		addAction(KeyEvent.VK_4,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
-				path.clear();
-				patrol=null;
-				steer=null;
+				hotBarSelected=3;
 			}
 		});
 	}
@@ -254,12 +254,22 @@ public class ViewScreen extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		world.render(g);
-		if(planningRoute||input.getButtonInput()[KeyEvent.VK_CONTROL]){
-			LinePath.render(path.toArray(new Vector2D[path.size()]), g);
-		}
 		g.setColor(Color.blue);
 		if(world.player!=null)
-		g.drawString(""+world.player.hp+"    "+mouseX+","+mouseY, 2, 30);
+			g.drawString(""+world.player.hp+"    "+mouseX+","+mouseY, 2, 30);
+		Graphics2D g2d=(Graphics2D)g;
+		BufferedImage image=null;
+		try {
+			image = ImageIO.read(new File("res/inventorybar.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		g2d.scale(5, 5);
+		g2d.drawImage(image,(750-165)/5,(this.getHeight()-80)/5,null);
+		g2d.setColor(new Color(0xffffff));
+		g2d.drawRect((750-165)/5+17*hotBarSelected, (this.getHeight()-80)/5, 16, 16);
+		g2d.scale(1.0/5, 1.0/5);
 	}
 	
 	public void addAction(int key, Action a){
@@ -281,9 +291,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 		if(world.player!=null)
 			world.player.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
 		long start=System.nanoTime();
-		if(!planningRoute){
-			world.update((int)(1000/fps)/10);
-		}
+		world.update((int)(1000/fps)/10);
 		long time=System.nanoTime()-start;
 		totalUpdate+=time;
 		//System.out.println("world update time - "+time);
