@@ -60,9 +60,9 @@ public class Wall implements Renderable{
 		int x=(int) (shape.getPosition().x+minX),y=(int) (shape.getPosition().y+minY),width=maxX-minX,height=maxY-minY;
 		for(int i=x;i<x+width;i+=40){
 			for(int j=y;j<y+height;j+=40){
-				g2d.scale(5, 5);
-				g2d.drawImage(image, i/5, j/5, null);
-				g2d.scale(1/5.0, 1/5.0);
+				g2d.scale(2.5, 2.5);
+				g2d.drawImage(image, (int)(i/2.5), (int)(j/2.5), null);
+				g2d.scale(1/2.5, 1/2.5);
 			}
 		}
 	}
