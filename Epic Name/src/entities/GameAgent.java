@@ -21,7 +21,7 @@ public class GameAgent extends GameEntity{
 	public int hp;
 	public Stats stats;
 	private Weapon weapon;
-	private ActionInfo[] actionList;
+	private ActionInfo[] actionList=new ActionInfo[0];
 	protected Action curAction=null;
 	private boolean dead;
 	
