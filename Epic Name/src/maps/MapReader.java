@@ -81,6 +81,11 @@ public class MapReader {
 		int height=layout[layout.length-1];
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
 		
+		if(world.player==null){
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,40,40,100000));
+			world.player.addToInventory(new Sword(world.player));
+			}
+		
 		ArrayList<BlockWall> walls= new ArrayList<BlockWall>();
 		ArrayList<Entity> entities= new ArrayList<Entity>();
 		BlockWall lastWall=new BlockWall(0,0,0,0);
@@ -103,12 +108,24 @@ public class MapReader {
 				}
 				
 				case 0xff0000:{
-					if(world.player==null){
-					world.player=new Player(x+20,y+20,new Circle(20),world,new Stats(30,30,40,40,100000));
-					world.player.addToInventory(new Sword(world.player));
-					}
 					world.player.position=new Vector2D(x+20,y+20);
 					entities.add(world.player);
+					break;
+				}
+				case 0x00ff00:{
+					spawnMonster(x+20,y+20,MapReader.BEHOLDER,world);
+					break;
+				}
+				case 0x00ee00:{
+					spawnMonster(x+20,y+20,MapReader.ANT,world);
+					break;
+				}
+				case 0x00dd00:{
+					spawnMonster(x+20,y+20,MapReader.GOBLIN_FIGHTER,world);
+					break;
+				}
+				case 0x00cc00:{
+					spawnMonster(x+20,y+20,MapReader.GOBLIN_ARCHER,world);
 					break;
 				}
 			}
@@ -146,15 +163,19 @@ public class MapReader {
 		switch(id){
 		case ANT:{
 			monster=new Ant(x, y, world);
+			break;
 		}
 		case GOBLIN_ARCHER:{
 			monster=new GoblinArcher(x,y,world);
+			break;
 		}
 		case GOBLIN_FIGHTER:{
 			monster=new GoblinFighter(x,y,world);
+			break;
 		}
 		case BEHOLDER:{
 			monster=new Beholder(x,y,world);
+			break;
 		}
 		}
 		world.addEntity(monster);
@@ -162,6 +183,7 @@ public class MapReader {
 	
 	public static void main(String args[]){
 		
+		World w=nextMap();
 		ViewScreen vs=new ViewScreen();
 		JFrame frame=new JFrame("Test");
 		frame.add(vs);
@@ -169,7 +191,7 @@ public class MapReader {
 		frame.pack();
 		frame.setVisible(true);
 		
-		vs.world=nextMap();
+		vs.world=w;
 		System.out.println(vs.world.getWalls().size());
 	}
 	

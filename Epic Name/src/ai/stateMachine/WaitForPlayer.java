@@ -19,6 +19,7 @@ public class WaitForPlayer extends State {
 
 	@Override
 	public void execute() {
+		if(target!=null)
 		if(agent.position.distanceTo(target.position)<1000){
 			if(agent.getWeapon().isRanged())
 				sm.changeState(new Archery(agent,sm,target));
