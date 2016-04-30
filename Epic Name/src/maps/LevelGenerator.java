@@ -14,7 +14,9 @@ public class LevelGenerator {
 		Level l=new Level();
 		World w=new World();
 		
-		l.addRoom("rooms/room1.png", 0);
+		l.addRoom("rooms/test2.png", 0);
+		
+		
 		
 		return l.toWorld();
 	}

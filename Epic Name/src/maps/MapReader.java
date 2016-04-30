@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import stats.Stats;
 import entities.Entity;
@@ -22,7 +23,7 @@ import world.Wall;
 import world.World;
 
 public class MapReader {
-	
+	public static int level=0;
 	public static int[] readImage(String file){
 		
 		int[] pixels=new int[0];
@@ -141,6 +142,17 @@ public class MapReader {
 		
 		vs.world=LevelGenerator.generate(0);
 		System.out.println(vs.world.getWalls().size());
+	}
+	
+	public static World nextMap(){
+		level++;
+		if(level==4){
+			JOptionPane.showMessageDialog(null, "Good job, You win!!!", "Congrats!", JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
+		}
+		World w=new World();
+		readMap("maps/level"+level+".png");
+		return w;
 	}
 	
 }

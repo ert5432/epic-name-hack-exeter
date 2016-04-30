@@ -43,6 +43,9 @@ public class Level {
 		int[] im=MapReader.readImage(r);
 		int width=(1+im[im.length-2])*40,height=(im[im.length-1]+1)*40;
 		DoorWay dw=doorPoints.get(loc);
+		
+		System.out.println(dw.x+" "+dw.y);
+		
 		Rectangle rec=new Rectangle(0,0,0,0);
 		if(dw.dir==0)
 			rec=new Rectangle(dw.x-width/2.0,dw.y-height,width,height);
@@ -53,7 +56,7 @@ public class Level {
 		else if(dw.dir==3)
 			rec=new Rectangle(dw.x-width,dw.y-height/2.0,width,height);
 		
-		Vector2D vec = rec.points[0];
+		Vector2D vec = rec.points[0].add(rec.getPosition());
 		
 		rooms.add(new Room((int)vec.x,(int)vec.y,width,height,r,loc));
 	}
@@ -91,7 +94,9 @@ public class Level {
 	public World toWorld() {
 		World w=new World();
 		for(Room r:rooms){
+			
 			MapReader.readMap(r.map, w, r.x, r.y);
+
 		}
 		return w;
 	}
