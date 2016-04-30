@@ -26,6 +26,8 @@ import geometry.Rectangle;
 import geometry.Vector2D;
 import weapons.Sword;
 import world.BlockWall;
+import world.FloorTile;
+import world.Stairs;
 import world.Wall;
 import world.World;
 
@@ -34,6 +36,9 @@ public class MapReader {
 	public static final int ANT=0,BEHOLDER=1,GOBLIN_ARCHER=2,GOBLIN_FIGHTER=3;
 	
 	public static int level=0;
+	
+	static ViewScreen vs;
+	
 	public static int[] readImage(String file){
 		
 		int[] pixels=new int[0];
@@ -128,8 +133,13 @@ public class MapReader {
 					spawnMonster(x+20,y+20,MapReader.GOBLIN_ARCHER,world);
 					break;
 				}
+				case 0x00ffff:{
+					world.stairs=new Stairs(x,y);
+					break;
+				}
 			}
-			
+			if(layout[i]!=0&&layout[i]!=0xffffff)
+				world.floors.add(new FloorTile(x,y));
 //			if(layout[i]==0)
 //				wallMade=true;
 //			else
@@ -184,7 +194,7 @@ public class MapReader {
 	public static void main(String args[]){
 		
 		World w=nextMap();
-		ViewScreen vs=new ViewScreen();
+		vs=new ViewScreen();
 		JFrame frame=new JFrame("Test");
 		frame.add(vs);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,4 +217,7 @@ public class MapReader {
 		return w;
 	}
 	
+	public static void goToNextMap(){
+		vs.world=nextMap();
+	}
 }

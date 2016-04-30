@@ -8,29 +8,25 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class FloorTile {
+import geometry.Rectangle;
 
-	static BufferedImage image = null;
-	int x;
-	int y;
-	public FloorTile(int x, int y) {
+public class Stairs {
+	public Rectangle rect;
+	BufferedImage sprite;
+	int x,y;
+	public Stairs(int x,int y){
+		rect=new Rectangle(x+20,y+20,40,40);
 		this.x=x;
 		this.y=y;
 		try {
-			image = ImageIO.read(new File("res/floor1.png"));
+			sprite = ImageIO.read(new File("res/stairs.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	
 	public void render(Graphics g){
-		Graphics2D g2d = (Graphics2D)g;
-		
-
-		g2d.drawImage(image,x,y,40,40,null);
-
+		Graphics2D g2=(Graphics2D) g;
+		g2.drawImage(sprite, x, y, 40, 40, null);
 	}
-
 }

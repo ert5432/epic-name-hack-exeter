@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import maps.MapReader;
 import weapons.entities.Projectile;
 import entities.Entity;
 import entities.GameAgent;
@@ -17,8 +18,10 @@ public class World implements Renderable{
 
 	private ArrayList<Entity> entities;
 	private ArrayList<Wall> walls;
+	public ArrayList<FloorTile> floors=new ArrayList<FloorTile>();
 	public long time=0;
 	public Player player;
+	public Stairs stairs=new Stairs(0,0);
 	
 	public World(){
 		entities=new ArrayList<Entity>();
@@ -43,6 +46,10 @@ public class World implements Renderable{
 		ArrayList<Entity> temp=new ArrayList<Entity>(entities);
 		for(Entity e:temp){
 			e.update(time);
+		}
+		if(stairs.rect.intersects(player.shape)){
+			MapReader.goToNextMap();
+			stairs=new Stairs(0,0);
 		}
 	}
 	
@@ -145,6 +152,9 @@ public class World implements Renderable{
 	
 	public void render(Graphics g){
 		long start=System.nanoTime();
+		for(FloorTile e:floors)
+			e.render(g);
+		stairs.render(g);
 		for(Entity e:entities){
 			if(e instanceof Renderable){
 				((Renderable)e).render(g);
