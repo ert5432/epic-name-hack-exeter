@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import maps.MapReader;
 import weapons.entities.Projectile;
 import entities.Entity;
 import entities.GameAgent;
 import entities.Player;
+import entities.StateAgent;
 import geometry.Circle;
 import geometry.Shape;
 import geometry.Vector2D;
@@ -17,8 +19,10 @@ public class World implements Renderable{
 
 	private ArrayList<Entity> entities;
 	private ArrayList<Wall> walls;
+	public ArrayList<FloorTile> floors=new ArrayList<FloorTile>();
 	public long time=0;
 	public Player player;
+	public Stairs stairs=new Stairs(0,0);
 	
 	public World(){
 		entities=new ArrayList<Entity>();
@@ -43,6 +47,10 @@ public class World implements Renderable{
 		ArrayList<Entity> temp=new ArrayList<Entity>(entities);
 		for(Entity e:temp){
 			e.update(time);
+		}
+		if(stairs.rect.intersects(player.shape)){
+			MapReader.goToNextMap();
+			stairs=new Stairs(0,0);
 		}
 	}
 	
@@ -76,7 +84,7 @@ public class World implements Renderable{
 		for(Entity e:entities){
 			if(e instanceof GameAgent){
 				GameAgent a=(GameAgent)e;
-				if(a!=agent&&a.contains(shape))
+				if(a!=agent&&a.contains(shape)&&!((a instanceof StateAgent)&&(agent instanceof StateAgent)))
 						return (GameAgent) e;
 			}
 		}
@@ -88,7 +96,7 @@ public class World implements Renderable{
 		for(Entity e:entities){
 			if(e instanceof GameAgent){
 				GameAgent a=(GameAgent)e;
-				if(a!=agent&&a.contains(shape))
+				if(a!=agent&&a.contains(shape)&&!((a instanceof StateAgent)&&(agent instanceof StateAgent)))
 						intersected.add(a);
 			}
 		}
@@ -145,6 +153,9 @@ public class World implements Renderable{
 	
 	public void render(Graphics g){
 		long start=System.nanoTime();
+		for(FloorTile e:floors)
+			e.render(g);
+		stairs.render(g);
 		for(Entity e:entities){
 			if(e instanceof Renderable){
 				((Renderable)e).render(g);

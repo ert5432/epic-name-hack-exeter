@@ -26,6 +26,8 @@ import geometry.Rectangle;
 import geometry.Vector2D;
 import weapons.Sword;
 import world.BlockWall;
+import world.FloorTile;
+import world.Stairs;
 import world.Wall;
 import world.World;
 
@@ -34,6 +36,9 @@ public class MapReader {
 	public static final int ANT=0,BEHOLDER=1,GOBLIN_ARCHER=2,GOBLIN_FIGHTER=3;
 	
 	public static int level=0;
+	
+	static ViewScreen vs;
+	
 	public static int[] readImage(String file){
 		
 		int[] pixels=new int[0];
@@ -81,6 +86,11 @@ public class MapReader {
 		int height=layout[layout.length-1];
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
 		
+		if(world.player==null){
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,40,40,100000));
+			world.player.addToInventory(new Sword(world.player));
+			}
+		
 		ArrayList<BlockWall> walls= new ArrayList<BlockWall>();
 		ArrayList<Entity> entities= new ArrayList<Entity>();
 		BlockWall lastWall=new BlockWall(0,0,0,0);
@@ -103,16 +113,33 @@ public class MapReader {
 				}
 				
 				case 0xff0000:{
-					if(world.player==null){
-					world.player=new Player(x+20,y+20,new Circle(20),world,new Stats(30,30,40,40,100000));
-					world.player.addToInventory(new Sword(world.player));
-					}
 					world.player.position=new Vector2D(x+20,y+20);
 					entities.add(world.player);
 					break;
 				}
+				case 0x00ff00:{
+					spawnMonster(x+20,y+20,MapReader.BEHOLDER,world);
+					break;
+				}
+				case 0x00ee00:{
+					spawnMonster(x+20,y+20,MapReader.ANT,world);
+					break;
+				}
+				case 0x00dd00:{
+					spawnMonster(x+20,y+20,MapReader.GOBLIN_FIGHTER,world);
+					break;
+				}
+				case 0x00cc00:{
+					spawnMonster(x+20,y+20,MapReader.GOBLIN_ARCHER,world);
+					break;
+				}
+				case 0x00ffff:{
+					world.stairs=new Stairs(x,y);
+					break;
+				}
 			}
-			
+			if(layout[i]!=0&&layout[i]!=0xffffff)
+				world.floors.add(new FloorTile(x,y));
 //			if(layout[i]==0)
 //				wallMade=true;
 //			else
@@ -146,15 +173,19 @@ public class MapReader {
 		switch(id){
 		case ANT:{
 			monster=new Ant(x, y, world);
+			break;
 		}
 		case GOBLIN_ARCHER:{
 			monster=new GoblinArcher(x,y,world);
+			break;
 		}
 		case GOBLIN_FIGHTER:{
 			monster=new GoblinFighter(x,y,world);
+			break;
 		}
 		case BEHOLDER:{
 			monster=new Beholder(x,y,world);
+			break;
 		}
 		}
 		world.addEntity(monster);
@@ -162,14 +193,15 @@ public class MapReader {
 	
 	public static void main(String args[]){
 		
-		ViewScreen vs=new ViewScreen();
+		World w=nextMap();
+		vs=new ViewScreen();
 		JFrame frame=new JFrame("Test");
 		frame.add(vs);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
-		vs.world=nextMap();
+		vs.world=w;
 		System.out.println(vs.world.getWalls().size());
 	}
 	
@@ -185,4 +217,7 @@ public class MapReader {
 		return w;
 	}
 	
+	public static void goToNextMap(){
+		vs.world=nextMap();
+	}
 }
