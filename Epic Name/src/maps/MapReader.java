@@ -140,7 +140,7 @@ public class MapReader {
 		frame.pack();
 		frame.setVisible(true);
 		
-		vs.world=LevelGenerator.generate(0);
+		vs.world=nextMap();
 		System.out.println(vs.world.getWalls().size());
 	}
 	
@@ -151,7 +151,8 @@ public class MapReader {
 			System.exit(0);
 		}
 		World w=new World();
-		readMap("maps/level"+level+".png");
+		readMap("rooms/level"+level+".png",w);
+		//readMap("rooms/test1.png");
 		return w;
 	}
 	
