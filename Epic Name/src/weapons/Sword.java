@@ -37,7 +37,9 @@ public class Sword extends Weapon{
 	
 	public void renderSprite(Graphics g,int x,int y){
 		Graphics2D g2=(Graphics2D) g;
-		g2.drawImage(image, x, y, 80, 80, null);
+		g2.scale(5, 5);
+		g2.drawImage(image, x/5+5, y/5, null);
+		g2.scale(1/5.0, 1/5.0);
 	}
 
 	@Override

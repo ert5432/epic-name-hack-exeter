@@ -286,6 +286,10 @@ public class ViewScreen extends JPanel implements ActionListener{
 		g2d.setColor(new Color(0xffffff));
 		g2d.drawRect((750-165)/5+17*hotBarSelected, (this.getHeight()-80)/5, 16, 16);
 		g2d.scale(1.0/5, 1.0/5);
+		for(int i=0;i<world.player.inventory.length;i++){
+			if(world.player.inventory[i]!=null)
+				world.player.inventory[i].renderSprite(g2d, 750-165+17*5*i, this.getHeight()-80);
+		}
 	}
 	
 	public void addAction(int key, Action a){
