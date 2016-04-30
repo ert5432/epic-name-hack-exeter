@@ -12,6 +12,7 @@ import world.World;
 public class GameEntity extends MobileEntity implements Renderable{
 
 	public Vector2D heading;
+	public double rotation;
 	public Shape shape;
 	public Color c;
 	public World world;
@@ -22,6 +23,7 @@ public class GameEntity extends MobileEntity implements Renderable{
 		super(position,new Vector2D(0,0),mass,maxSpeed,maxTurnSpeed,
 				maxForce);
 		heading=new Vector2D(1,0);
+		rotation=0;
 		this.shape=shape;
 		shape.setPosition(position);
 		this.world=world;
@@ -33,6 +35,7 @@ public class GameEntity extends MobileEntity implements Renderable{
 		super(new Vector2D(x,y),new Vector2D(0,0),mass,maxSpeed,maxTurnSpeed,
 				maxForce);
 		heading=new Vector2D(1,0);
+		rotation=0;
 		this.shape=shape;
 		shape.setPosition(position);
 		id=Math.random();
@@ -45,6 +48,7 @@ public class GameEntity extends MobileEntity implements Renderable{
 		super(position,new Vector2D(0,0),mass,maxSpeed,maxTurnSpeed,
 				maxForce);
 		heading=new Vector2D(1,0);
+		rotation=0;
 		this.shape=shape;
 		shape.setPosition(position);
 		this.world=world;
@@ -56,6 +60,7 @@ public class GameEntity extends MobileEntity implements Renderable{
 		super(new Vector2D(x,y),new Vector2D(0,0),mass,maxSpeed,maxTurnSpeed,
 				maxForce);
 		heading=new Vector2D(1,0);
+		rotation=0;
 		this.shape=shape;
 		shape.setPosition(position);
 		id=Math.random();
@@ -65,6 +70,7 @@ public class GameEntity extends MobileEntity implements Renderable{
 	
 	public void setHeading(Vector2D heading){
 		this.heading=heading;
+		rotation=heading.angleToOrigin();
 	}
 	
 	public void update(double time){
