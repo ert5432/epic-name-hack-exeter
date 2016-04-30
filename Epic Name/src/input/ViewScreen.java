@@ -302,7 +302,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 			}
 		}
 		if(world.player!=null)
-			world.player.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
+			world.player.setTarget(new Vector2D(input.getMouseX()-750+world.player.getPosition().x,input.getMouseY()-475+world.player.getPosition().y));
 		long start=System.nanoTime();
 		world.update((int)(1000/fps)/10);
 		long time=System.nanoTime()-start;
