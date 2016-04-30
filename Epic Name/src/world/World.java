@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import weapons.entities.Projectile;
 import entities.Entity;
 import entities.GameAgent;
+import entities.Player;
 import geometry.Circle;
 import geometry.Shape;
 import geometry.Vector2D;
@@ -17,6 +18,7 @@ public class World implements Renderable{
 	private ArrayList<Entity> entities;
 	private ArrayList<Wall> walls;
 	public long time=0;
+	public Player player;
 	
 	public World(){
 		entities=new ArrayList<Entity>();

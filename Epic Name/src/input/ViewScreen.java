@@ -44,7 +44,7 @@ import ai.steering.*;
 
 public class ViewScreen extends JPanel implements ActionListener{
 //DWANG
-	private World world;
+	public World world;
 	/*private Path patrol=new LinePath(new Vector2D[]{
 		new Vector2D(605,656),new Vector2D(745,706),new Vector2D(817,709),
 		new Vector2D(903,668),new Vector2D(935,598),new Vector2D(942,519),
@@ -63,7 +63,6 @@ public class ViewScreen extends JPanel implements ActionListener{
 	private Input input;
 	protected int mouseX,mouseY;
 	long totalUpdate=0,totalRender=0;
-	Player g1;
 	Player g2;
 	GameAgent g3;
 	private Behavior steer;
@@ -95,27 +94,22 @@ public class ViewScreen extends JPanel implements ActionListener{
 		world.addWall(new Wall(new Rectangle(-10,475,20,950)));
 		world.addWall(new Wall(new Rectangle(1510,475,20,950)));
 		world.addWall(new Wall(new Rectangle(750,960,1500,20)));
-   		g1=new Player(new Vector2D(500,500),new Circle(20), world, new Stats(30,30,40,40,100000)){
-  			public void update(double time){
-				super.update(time);
-				this.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
-			}
-   		};
-		world.addEntity(g1);
-		g1.setWeapon(new Sword(g1));
+   		world.player=new Player(new Vector2D(500,500),new Circle(20), world, new Stats(30,30,40,40,100000));
+		world.addEntity(world.player);
+		world.player.setWeapon(new Sword(world.player));
 		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,30,30,100)){
 			public void update(double time){
 				super.update(time);
 				this.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
 			}
 		};
-		g2.setWeapon(new PowerRod(g1));
+		g2.setWeapon(new PowerRod(world.player));
 		world.addEntity(g2);
 		g3=new StateAgent(600,600,new Circle(20),world,new Stats(30,30,30,30,100));
 		g3.setWeapon(new Sword(g3));
 		
 		StateMachine sm=((StateAgent)g3).getStateMachine();
-		sm.changeState(new Charging(g3,sm,g1));
+		sm.changeState(new Charging(g3,sm,world.player));
 		world.addEntity(g3);
 		
 		//world.addWall(new Wall(new Polygon(new double[]{50,150,50},new double[]{50,50,150}),Color.BLACK));
@@ -147,23 +141,23 @@ public class ViewScreen extends JPanel implements ActionListener{
 		t.start();
 		addAction(KeyEvent.VK_W, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.move(new Vector2D(0,-1).mult(g1.getMaxAcceleration()));
+				world.player.move(new Vector2D(0,-1).mult(world.player.getMaxAcceleration()));
 			}
 		});
 		addAction(KeyEvent.VK_S, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.move(new Vector2D(0,1).mult(g1.getMaxAcceleration()));
+				world.player.move(new Vector2D(0,1).mult(world.player.getMaxAcceleration()));
 			}
 		});
 		addAction(KeyEvent.VK_A, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.move(new Vector2D(-1,0).mult(g1.getMaxAcceleration()));
+				world.player.move(new Vector2D(-1,0).mult(world.player.getMaxAcceleration()));
 			}
 		});
 		addAction(KeyEvent.VK_D, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
 				
-				g1.move(new Vector2D(1,0).mult(g1.getMaxAcceleration()));
+				world.player.move(new Vector2D(1,0).mult(world.player.getMaxAcceleration()));
 			}
 		});
 		addAction(KeyEvent.VK_UP, new AbstractAction(){
@@ -188,27 +182,27 @@ public class ViewScreen extends JPanel implements ActionListener{
 		});
 		addAction(Input.MOUSE_BUTTON1, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.act(0);				
+				world.player.act(0);				
 			}
 		});
 		addAction(Input.MOUSE_BUTTON2, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.act(1);
+				world.player.act(1);
 			}
 		});
 		addAction(Input.MOUSE_BUTTON3, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.act(2);
+				world.player.act(2);
 			}
 		});
 		addAction(Input.MOUSE_BUTTON4, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.act(3);
+				world.player.act(3);
 			}
 		});
 		addAction(Input.MOUSE_BUTTON5, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g1.act(4);
+				world.player.act(4);
 			}
 		});
 		addAction(KeyEvent.VK_SPACE,new AbstractAction(){
@@ -264,7 +258,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 			LinePath.render(path.toArray(new Vector2D[path.size()]), g);
 		}
 		g.setColor(Color.blue);
-		g.drawString(""+g1.hp+"    "+mouseX+","+mouseY, 2, 30);
+		if(world.player!=null)
+		g.drawString(""+world.player.hp+"    "+mouseX+","+mouseY, 2, 30);
 	}
 	
 	public void addAction(int key, Action a){
@@ -283,6 +278,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 				}
 			}
 		}
+		if(world.player!=null)
+			world.player.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
 		long start=System.nanoTime();
 		if(!planningRoute){
 			world.update((int)(1000/fps)/10);

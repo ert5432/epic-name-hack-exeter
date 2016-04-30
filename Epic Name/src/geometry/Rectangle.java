@@ -13,6 +13,9 @@ public class Rectangle extends Polygon{
 				new double[]{-height/2,-height/2,height/2,height/2}, x, y);
 	}
 
+	public boolean isAdjacent(Rectangle r){
+		return false;
+	}
 	/*public void render(Graphics g) {
 		g.fillRect((int)(position.getX()-width/2),(int)(position.getY()-height/2),(int)width,(int)height);;
 	}
