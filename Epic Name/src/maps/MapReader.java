@@ -24,6 +24,8 @@ import geometry.Circle;
 import geometry.Polygon;
 import geometry.Rectangle;
 import geometry.Vector2D;
+import weapons.Bow;
+import weapons.PowerRod;
 import weapons.Sword;
 import world.BlockWall;
 import world.FloorTile;
@@ -87,8 +89,10 @@ public class MapReader {
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
 		
 		if(world.player==null){
-			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,40,40,100000));
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,1000));
 			world.player.addToInventory(new Sword(world.player));
+			world.player.addToInventory(new Bow(world.player));
+			world.player.addToInventory(new PowerRod(world.player));
 			}
 		
 		ArrayList<BlockWall> walls= new ArrayList<BlockWall>();
