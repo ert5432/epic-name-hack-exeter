@@ -25,4 +25,10 @@ public class Sword extends Weapon{
 	public void renderSprite(Graphics g,int x,int y){
 		
 	}
+
+	@Override
+	public boolean isRanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

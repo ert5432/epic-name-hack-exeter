@@ -54,17 +54,23 @@ public class Wall implements Renderable{
 	}
 	
 	public void render(Graphics g){
-		//System.out.println("hey");
+		/*//System.out.println("hey");
 		Graphics2D g2d=(Graphics2D)g;
 		
 		int x=((int) (shape.getPosition().x+minX))-40,y=(int) (shape.getPosition().y+minY),width=maxX-minX,height=maxY-minY;
 		for(int i=x;i<x+width;i+=40){
 			for(int j=y;j<y+height;j+=40){
 				g2d.scale(2.5, 2.5);
+<<<<<<< HEAD
 				g2d.drawImage(image,(int)(i/2.5),(int) (j/2.5), null);
+=======
+				g2d.drawImage(image, (int)(i/2.5), (int)(j/2.5), null);
+>>>>>>> branch 'master' of https://github.com/pminch/epic-name-hack-exeter
 				g2d.scale(1/2.5, 1/2.5);
 			}
-		}
+		}*/
+		g.setColor(Color.black);
+		shape.render(g);
 	}
 	
 	public Shape getShape(){

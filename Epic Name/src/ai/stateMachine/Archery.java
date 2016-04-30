@@ -5,12 +5,12 @@ import ai.steering.Pursue;
 import ai.steering.SteeringOutput;
 import entities.GameAgent;
 
-public class Charging extends State {
+public class Archery extends State {
 
 	GameAgent target;
 	Behavior steer;
 	
-	public Charging(GameAgent agent, StateMachine sm,GameAgent target) {
+	public Archery(GameAgent agent, StateMachine sm,GameAgent target) {
 		super(agent, sm);
 		this.target=target;
 	}
@@ -24,10 +24,12 @@ public class Charging extends State {
 
 	@Override
 	public void execute() {
-		SteeringOutput output=steer.getSteering();
-		agent.move(output.linear);
-		if(agent.canAct()&&agent.position.distanceTo(target.position)<100){
+		if(agent.canAct()&&agent.position.distanceTo(target.position)<300){
 			agent.act(1);
+		}
+		else{
+			SteeringOutput output=steer.getSteering();
+			agent.move(output.linear);
 		}
 		if(agent.position.distanceTo(target.position)>1000){
 			sm.changeState(new WaitForPlayer(agent,sm,target));
