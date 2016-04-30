@@ -25,7 +25,7 @@ public class Player extends GameAgent{
 	private Animation standingAnim = new Animation(standing, 20);
 	
 	private BufferedImage[] walking= {sprite.getSprite(0, 0),sprite.getSprite(1, 0) };
-	private Animation walkingAnim = new Animation(walking, 20);
+	private Animation walkingAnim = new Animation(walking, 15);
 	
 	
 	public Player(Vector2D position,Shape shape,World world,Stats stats){
@@ -81,7 +81,13 @@ public class Player extends GameAgent{
 		g2d.rotate(rotation,position.x,position.y);
 		g2d.scale(4, 4);
 		
-		g2d.drawImage(walkingAnim.getSprite(), (int)((position.x-20)/4.0), (int)((position.y-24)/4.0), null);
+		if(velocity.isZeroed()){
+			g2d.drawImage(standingAnim.getSprite(), (int)((position.x-20)/4.0), (int)((position.y-24)/4.0), null);
+		}else{
+			g2d.drawImage(walkingAnim.getSprite(), (int)((position.x-20)/4.0), (int)((position.y-24)/4.0), null);
+		}
+		
+		
 		
 		g2d.scale(.25, .25);
 		g2d.rotate(-rotation,position.x,position.y);
