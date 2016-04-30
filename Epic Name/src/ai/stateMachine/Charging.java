@@ -27,7 +27,7 @@ public class Charging extends State {
 		SteeringOutput output=steer.getSteering();
 		agent.move(output.linear);
 		if(agent.canAct()&&agent.position.distanceTo(target.position)<100){
-			agent.act(0);
+			agent.act(1);
 		}
 	}
 
