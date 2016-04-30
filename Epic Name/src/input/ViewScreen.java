@@ -1,20 +1,5 @@
 package input;
 
-import entities.Ant;
-import entities.Beholder;
-import entities.GameAgent;
-import entities.Goblin;
-import entities.GoblinFighter;
-import entities.Player;
-import entities.StateAgent;
-import geometry.Circle;
-import geometry.Line;
-import geometry.PartialArc;
-import geometry.Polygon;
-import geometry.Rectangle;
-import geometry.Shape;
-import geometry.Vector2D;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -39,17 +23,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import ai.stateMachine.Charging;
+import ai.stateMachine.StateMachine;
+import ai.steering.Behavior;
+import ai.steering.Path;
+import entities.GameAgent;
+import entities.GoblinFighter;
+import entities.Player;
+import entities.StateAgent;
+import geometry.Circle;
+import geometry.Rectangle;
+import geometry.Vector2D;
 import stats.Stats;
 import weapons.Bow;
-import weapons.BowSword;
 import weapons.PowerRod;
-import weapons.Stone;
 import weapons.Sword;
 import world.Wall;
 import world.World;
-import ai.stateMachine.Charging;
-import ai.stateMachine.StateMachine;
-import ai.steering.*;
 
 public class ViewScreen extends JPanel implements ActionListener{
 //DWANG
@@ -75,9 +65,14 @@ public class ViewScreen extends JPanel implements ActionListener{
 	long totalUpdate=0,totalRender=0;
 	Player g2;
 	GameAgent g3;
+	
+	
+	
 	private Behavior steer;
 //	JFrame f;
 	public static final double fps=100;
+	
+	
 	
 	@SuppressWarnings("serial")
 	public ViewScreen(){
@@ -96,6 +91,10 @@ public class ViewScreen extends JPanel implements ActionListener{
 				}
 			}
 		};
+		
+		
+		this.setBackground(Color.BLACK);
+		
 		addKeyListener(input);
 		addMouseListener(input);
 		addMouseMotionListener(input);
