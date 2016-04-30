@@ -13,7 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import stats.Stats;
+import entities.Ant;
+import entities.Beholder;
 import entities.Entity;
+import entities.GameAgent;
+import entities.GoblinArcher;
+import entities.GoblinFighter;
 import entities.Player;
 import geometry.Circle;
 import geometry.Polygon;
@@ -23,6 +28,9 @@ import world.Wall;
 import world.World;
 
 public class MapReader {
+	
+	public static final int ANT=0,BEHOLDER=1,GOBLIN_ARCHER=2,GOBLIN_FIGHTER=3;
+	
 	public static int level=0;
 	public static int[] readImage(String file){
 		
@@ -127,8 +135,23 @@ public class MapReader {
 		}
 	}
 	
-	public static void spawnMonster(int x,int y,int id){
-		
+	public static void spawnMonster(int x,int y,int id,World world){
+		GameAgent monster = null;
+		switch(id){
+		case ANT:{
+			monster=new Ant(x, y, world);
+		}
+		case GOBLIN_ARCHER:{
+			monster=new GoblinArcher(x,y,world);
+		}
+		case GOBLIN_FIGHTER:{
+			monster=new GoblinFighter(x,y,world);
+		}
+		case BEHOLDER:{
+			monster=new Beholder(x,y,world);
+		}
+		}
+		world.addEntity(monster);
 	}
 	
 	public static void main(String args[]){

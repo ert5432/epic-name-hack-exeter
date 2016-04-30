@@ -8,10 +8,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import ai.stateMachine.Charging;
+import ai.stateMachine.StateMachine;
+import ai.stateMachine.WaitForPlayer;
+import geometry.Circle;
 import geometry.Shape;
 import graphics.Animation;
 import graphics.Sprite;
 import stats.Stats;
+import weapons.PowerRod;
 import world.World;
 
 public class Ant extends StateAgent{
@@ -23,10 +28,13 @@ public class Ant extends StateAgent{
 	private BufferedImage[] walking= {sprite.getSprite(0, 0),sprite.getSprite(1, 0) };
 	private Animation walkingAnim = new Animation(walking, 15);
 
-	public Ant(double x, double y, Shape shape, World world, Stats stats) {
-		super(x, y, shape, world, stats);
+	public Ant(double x, double y, World world) {
+		super(x, y, new Circle(24), world, new Stats(15,15,15,15,30));
 		walkingAnim.start();
 		standingAnim.start();
+		setWeapon(new PowerRod(this));
+		StateMachine sm=getStateMachine();
+		sm.changeState(new WaitForPlayer(this,sm,world.player));
 	}
 	
 	public void update(double time){

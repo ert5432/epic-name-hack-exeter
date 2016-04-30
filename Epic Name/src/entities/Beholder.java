@@ -8,15 +8,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import ai.stateMachine.StateMachine;
+import ai.stateMachine.WaitForPlayer;
+import geometry.Circle;
 import geometry.Shape;
 import stats.Stats;
+import weapons.PowerRod;
 import world.World;
 
 public class Beholder extends StateAgent{
 
-	public Beholder(double x, double y, Shape shape, World world, Stats stats) {
-		super(x, y, shape, world, stats);
-		
+	public Beholder(double x, double y, World world) {
+		super(x, y, new Circle(32), world, new Stats(30,30,30,30,60));
+		setWeapon(new PowerRod(this));
+		StateMachine sm=getStateMachine();
+		sm.changeState(new WaitForPlayer(this,sm,world.player));
 	}
 	
 	public void render(Graphics g){
