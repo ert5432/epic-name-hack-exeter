@@ -8,6 +8,7 @@ import weapons.entities.Projectile;
 import entities.Entity;
 import entities.GameAgent;
 import entities.Player;
+import entities.StateAgent;
 import geometry.Circle;
 import geometry.Shape;
 import geometry.Vector2D;
@@ -76,7 +77,7 @@ public class World implements Renderable{
 		for(Entity e:entities){
 			if(e instanceof GameAgent){
 				GameAgent a=(GameAgent)e;
-				if(a!=agent&&a.contains(shape))
+				if(a!=agent&&a.contains(shape)&&!((a instanceof StateAgent)&&(agent instanceof StateAgent)))
 						return (GameAgent) e;
 			}
 		}
@@ -88,7 +89,7 @@ public class World implements Renderable{
 		for(Entity e:entities){
 			if(e instanceof GameAgent){
 				GameAgent a=(GameAgent)e;
-				if(a!=agent&&a.contains(shape))
+				if(a!=agent&&a.contains(shape)&&!((a instanceof StateAgent)&&(agent instanceof StateAgent)))
 						intersected.add(a);
 			}
 		}
