@@ -18,7 +18,8 @@ public class StateMachine {
 	}
 	
 	public void changeState(State newState){
-		state.exitState();
+		if(state!=null)
+			state.exitState();
 		newState.enterState();
 		this.state=newState;
 	}
