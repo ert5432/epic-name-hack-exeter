@@ -1,5 +1,7 @@
 package maps;
 
+import input.ViewScreen;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -7,8 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
+import stats.Stats;
 import entities.Entity;
+import entities.Player;
+import geometry.Circle;
 import geometry.Polygon;
 import geometry.Rectangle;
 import world.BlockWall;
@@ -53,8 +59,12 @@ public class MapReader {
 		
 	}
 	
-	//absolute black images are walls
 	public static void readMap(String map,World world){
+		readMap(map,world,0,0);
+	}
+	
+	//absolute black images are walls
+	public static void readMap(String map,World world,int dx,int dy){
 		int[] layout=readImage(map);
 		int width=layout[layout.length-2];
 		int height=layout[layout.length-1];
@@ -67,6 +77,7 @@ public class MapReader {
 		for(int i=0;i<layout.length;i++){
 			int x=(i%width)*40;
 			int y=(i/height)*40;
+			
 			switch(layout[i]){
 				case 0:{
 					if(wallMade&&x!=0){
@@ -79,10 +90,14 @@ public class MapReader {
 					}
 					break;
 				}
-				case 0x0000ff:{
-					
+				
+				case 0xff0000:{
+					world.player=new Player(x+20,y+20,new Circle(20),world,new Stats(30,30,40,40,100000));
+					entities.add(world.player);
+					break;
 				}
 			}
+			
 			if(layout[i]==0)
 				wallMade=true;
 			else
@@ -100,11 +115,14 @@ public class MapReader {
 		}
 		}while(!complete);
 		
-		for(Entity e:entities)
+		for(Entity e:entities){
 			world.addEntity(e);
+		}
 		for(BlockWall e:walls){
-			if(e.width!=0)
-			world.addWall(e);
+			if(e.width!=0){
+				world.addWall(e);
+				e.setRect(e.x+dx, e.y+dy, e.width, e.height);
+			}
 		}
 	}
 	
@@ -113,9 +131,17 @@ public class MapReader {
 	}
 	
 	public static void main(String args[]){
-		World w=new World();
-		readMap("map1.png", w);
-		System.out.println(w.getWalls().size());
+		
+		ViewScreen vs=new ViewScreen();
+		JFrame frame=new JFrame("Test");
+		frame.add(vs);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+		
+		vs.world=new World();
+		readMap("map1.png", vs.world);
+		System.out.println(vs.world.getWalls().size());
 	}
 	
 }
