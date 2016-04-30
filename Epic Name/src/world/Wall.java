@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
+import entities.GameAgent;
 import geometry.Line;
 import geometry.Polygon;
 import geometry.Shape;
@@ -95,5 +96,9 @@ public class Wall implements Renderable{
 			
 		}
 		return normals;
+	}
+	
+	public void setShape(Polygon s){
+		shape=s;
 	}
 }
