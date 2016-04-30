@@ -2,6 +2,7 @@ package input;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -269,9 +270,10 @@ public class ViewScreen extends JPanel implements ActionListener{
 		world.render(g);
 		g2d.translate(-750+world.player.getPosition().x, -475+world.player.getPosition().y);
 		
-		g.setColor(Color.blue);
+		g.setColor(Color.white);
+		g.setFont( new Font("Serif", Font.BOLD, 30));
 		if(world.player!=null)
-			g.drawString(""+world.player.hp+"    "+mouseX+","+mouseY, 2, 30);
+			g.drawString(""+world.player.hp, 10, 30);
 		
 		
 		BufferedImage image=null;

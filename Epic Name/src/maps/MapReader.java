@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import sound.SoundHandler;
 import stats.Stats;
 import entities.Ant;
 import entities.Beholder;
@@ -24,6 +25,8 @@ import geometry.Circle;
 import geometry.Polygon;
 import geometry.Rectangle;
 import geometry.Vector2D;
+import weapons.Bow;
+import weapons.PowerRod;
 import weapons.Sword;
 import world.BlockWall;
 import world.FloorTile;
@@ -87,8 +90,10 @@ public class MapReader {
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
 		
 		if(world.player==null){
-			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,40,40,100000));
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,1000));
 			world.player.addToInventory(new Sword(world.player));
+			world.player.addToInventory(new Bow(world.player));
+			world.player.addToInventory(new PowerRod(world.player));
 			}
 		
 		ArrayList<BlockWall> walls= new ArrayList<BlockWall>();
@@ -192,6 +197,8 @@ public class MapReader {
 	}
 	
 	public static void main(String args[]){
+		
+		SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
 		
 		World w=nextMap();
 		vs=new ViewScreen();
