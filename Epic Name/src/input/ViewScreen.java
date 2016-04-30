@@ -40,7 +40,7 @@ import world.World;
 import ai.steering.*;
 
 public class ViewScreen extends JPanel implements ActionListener{
-
+//DWANG
 	private World world;
 	/*private Path patrol=new LinePath(new Vector2D[]{
 		new Vector2D(605,656),new Vector2D(745,706),new Vector2D(817,709),
