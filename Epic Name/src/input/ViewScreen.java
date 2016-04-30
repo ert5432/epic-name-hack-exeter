@@ -2,6 +2,7 @@ package input;
 
 import entities.GameAgent;
 import entities.Player;
+import entities.StateAgent;
 import geometry.Circle;
 import geometry.Line;
 import geometry.PartialArc;
@@ -37,6 +38,8 @@ import weapons.Stone;
 import weapons.Sword;
 import world.Wall;
 import world.World;
+import ai.stateMachine.Charging;
+import ai.stateMachine.StateMachine;
 import ai.steering.*;
 
 public class ViewScreen extends JPanel implements ActionListener{
@@ -100,7 +103,7 @@ public class ViewScreen extends JPanel implements ActionListener{
    		};
 		world.addEntity(g1);
 		g1.setWeapon(new PowerRod(g1));
-		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,300,300,100000)){
+		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,30,30,100)){
 			public void update(double time){
 				super.update(time);
 				this.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
@@ -108,20 +111,11 @@ public class ViewScreen extends JPanel implements ActionListener{
 		};
 		g2.setWeapon(new PowerRod(g1));
 		world.addEntity(g2);
-		g3=new GameAgent(new Vector2D(600,600),new Circle(20),world,new Stats(300,300,30,30,100),Color.blue){
-			int i=0;
-			public void update(double time){
-				super.update(time);
-				if(steer!=null){
-					SteeringOutput output=steer.getSteering();
-					this.move(output.linear);
-				}
-				if(curAction==null){
-					act(0);
-				}
-			}
-		};
-		g3.setWeapon(new Bow(g3));
+		g3=new StateAgent(600,600,new Circle(20),world,new Stats(30,30,30,30,100));
+		g3.setWeapon(new Sword(g3));
+		
+		StateMachine sm=((StateAgent)g3).getStateMachine();
+		sm.changeState(new Charging(g3,sm,g1));
 		world.addEntity(g3);
 		
 		//world.addWall(new Wall(new Polygon(new double[]{50,150,50},new double[]{50,50,150}),Color.BLACK));

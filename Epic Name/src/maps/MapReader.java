@@ -30,7 +30,7 @@ public class MapReader {
 			image.getRGB(0, 0,width, height, pixels,0,width);
 			
 			pixels[pixels.length-2]=width;
-			pixels[pixels.length-2]=height;
+			pixels[pixels.length-1]=height;
 			
 			for(int x=0; x<width;x++){
 				for(int y=0; y<height; y++){
@@ -65,8 +65,8 @@ public class MapReader {
 		BlockWall lastWall=new BlockWall(0,0,0,0);
 		boolean wallMade=false;
 		for(int i=0;i<layout.length;i++){
-			int x=(i%width);
-			int y=(i/height);
+			int x=(i%width)*40;
+			int y=(i/height)*40;
 			switch(layout[i]){
 				case 0:{
 					if(wallMade&&x!=0){
@@ -77,6 +77,10 @@ public class MapReader {
 						lastWall=new BlockWall(x,y,40,40);
 						walls.add(lastWall);
 					}
+					break;
+				}
+				case 0x0000ff:{
+					
 				}
 			}
 			if(layout[i]==0)
@@ -96,6 +100,12 @@ public class MapReader {
 		}
 		}while(!complete);
 		
+		for(Entity e:entities)
+			world.addEntity(e);
+		for(BlockWall e:walls){
+			if(e.width!=0)
+			world.addWall(e);
+		}
 	}
 	
 	public static void spawnMonster(int x,int y,int id){
@@ -103,10 +113,9 @@ public class MapReader {
 	}
 	
 	public static void main(String args[]){
-		if(readImage("yee.jpg").length==0)
-			System.out.println("YAAAA");
-		else
-			System.out.println(readImage("yee.jpg")[0]+"");
+		World w=new World();
+		readMap("map1.png", w);
+		System.out.println(w.getWalls().size());
 	}
 	
 }
