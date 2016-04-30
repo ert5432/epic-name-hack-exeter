@@ -97,7 +97,7 @@ public class GameAgent extends GameEntity{
 		if(Math.abs(theta)>maxTurnSpeed*time){
 			theta=maxTurnSpeed*Math.signum(theta)*time;
 		}
-		heading=heading.rotate(theta);
+		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
 	}
 	

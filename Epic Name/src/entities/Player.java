@@ -18,7 +18,6 @@ public class Player extends GameAgent{
 
 	public static final boolean RIGHT = true,LEFT=false;
 	private Vector2D target;
-	public double rotation;
 	
 	//dwang
 	private Sprite sprite = new Sprite("sheet1", 12);
@@ -32,7 +31,6 @@ public class Player extends GameAgent{
 	public Player(Vector2D position,Shape shape,World world,Stats stats){
 		super(position,shape,world,stats);
 		target=null;
-		rotation=0;
 		standingAnim.start();
 		walkingAnim.start();
 	}
@@ -40,8 +38,6 @@ public class Player extends GameAgent{
 	public Player(double x,double y,Shape shape,World world,Stats stats){
 		super(x,y,shape,world,stats);
 		target=null;
-		rotation=0;
-		
 		standingAnim.start();
 		walkingAnim.start();
 	}
@@ -69,7 +65,7 @@ public class Player extends GameAgent{
 		if(Math.abs(theta)>maxTurnSpeed*time){
 			theta=maxTurnSpeed*Math.signum(theta)*time;
 		}
-		heading=heading.rotate(theta);
+		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
 	}
 
@@ -82,12 +78,13 @@ public class Player extends GameAgent{
 		
 	
 		Graphics2D g2d = (Graphics2D)(g);
-		g2d.rotate(rotation);
+		g2d.rotate(rotation,position.x,position.y);
 		g2d.scale(4, 4);
 		
 		g2d.drawImage(walkingAnim.getSprite(), (int)((position.x-20)/4.0), (int)((position.y-24)/4.0), null);
 		
 		g2d.scale(.25, .25);
+		g2d.rotate(-rotation,position.x,position.y);
 	}
 	
 	public void rotate(boolean direction,double time){
@@ -96,9 +93,7 @@ public class Player extends GameAgent{
 			theta=maxTurnSpeed*time;
 		else
 			theta=-maxTurnSpeed*time;
-		heading=heading.rotate(theta);
+		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
-		rotation+=theta;
-		rotation=Shape.modulus(rotation,Math.PI*2);
 	}
 }
