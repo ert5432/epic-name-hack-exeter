@@ -1,5 +1,6 @@
 package weapons;
 
+import java.awt.Graphics;
 import java.util.Random;
 
 import actions.attacks.Attack;
@@ -23,5 +24,9 @@ public abstract class Weapon {
 	
 	public AttackInfo[] getAttacks(){
 		return attacks;
+	}
+	
+	public void renderSprite(Graphics g){
+		
 	}
 }

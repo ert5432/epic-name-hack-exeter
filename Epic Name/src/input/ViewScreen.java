@@ -261,11 +261,16 @@ public class ViewScreen extends JPanel implements ActionListener{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		Graphics2D g2d=(Graphics2D)g;
+		g2d.translate(750-world.player.getPosition().x, 475-world.player.getPosition().y);
 		world.render(g);
+		g2d.translate(-750+world.player.getPosition().x, -475+world.player.getPosition().y);
+		
 		g.setColor(Color.blue);
 		if(world.player!=null)
 			g.drawString(""+world.player.hp+"    "+mouseX+","+mouseY, 2, 30);
-		Graphics2D g2d=(Graphics2D)g;
+		
+		
 		BufferedImage image=null;
 		try {
 			image = ImageIO.read(new File("res/inventorybar.png"));
