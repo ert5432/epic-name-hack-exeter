@@ -263,6 +263,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D)g;
+		if(world.player==null)
+		System.out.println("hi");
 		g2d.translate(750-world.player.getPosition().x, 475-world.player.getPosition().y);
 		world.render(g);
 		g2d.translate(-750+world.player.getPosition().x, -475+world.player.getPosition().y);
