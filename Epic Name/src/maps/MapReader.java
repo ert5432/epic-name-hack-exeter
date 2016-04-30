@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import sound.SoundHandler;
 import stats.Stats;
 import entities.Ant;
 import entities.Beholder;
@@ -196,6 +197,8 @@ public class MapReader {
 	}
 	
 	public static void main(String args[]){
+		
+		SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
 		
 		World w=nextMap();
 		vs=new ViewScreen();
