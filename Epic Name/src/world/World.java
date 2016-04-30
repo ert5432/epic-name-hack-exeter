@@ -17,7 +17,6 @@ public class World implements Renderable{
 
 	private ArrayList<Entity> entities;
 	private ArrayList<Wall> walls;
-	private ArrayList<WallImage> wallImages;
 	public long time=0;
 	public Player player;
 	

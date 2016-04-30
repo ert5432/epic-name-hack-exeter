@@ -54,7 +54,7 @@ public class Wall implements Renderable{
 	}
 	
 	public void render(Graphics g){
-		System.out.println("hey");
+		//System.out.println("hey");
 		Graphics2D g2d=(Graphics2D)g;
 		
 		int x=(int) (shape.getPosition().x+minX),y=(int) (shape.getPosition().y+minY),width=maxX-minX,height=maxY-minY;
