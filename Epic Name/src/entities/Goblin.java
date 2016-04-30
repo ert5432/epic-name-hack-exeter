@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import ai.stateMachine.StateMachine;
+import ai.stateMachine.WaitForPlayer;
+import geometry.Circle;
 import geometry.Shape;
 import graphics.Animation;
 import graphics.Sprite;
@@ -19,12 +22,14 @@ public class Goblin extends StateAgent{
 	private BufferedImage[] walking= {sprite.getSprite(0, 0),sprite.getSprite(1, 0) };
 	private Animation walkingAnim = new Animation(walking, 15);
 	
-	public Goblin(double x, double y, Shape shape, World world, Stats stats) {
-		super(x, y, shape, world, stats);
+	public Goblin(double x, double y, World world, Stats stats) {
+		super(x, y, new Circle(32), world, stats);
 		// TODO Auto-generated constructor stub
 		
 		walkingAnim.start();
 		standingAnim.start();
+		StateMachine sm=getStateMachine();
+		sm.changeState(new WaitForPlayer(this,sm,world.player));
 	}
 	
 	public void update(double time){
