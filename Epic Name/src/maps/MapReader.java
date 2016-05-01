@@ -90,7 +90,7 @@ public class MapReader {
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
 		
 		if(world.player==null){
-			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,1000));
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,500));
 			world.player.addToInventory(new Sword(world.player));
 			world.player.addToInventory(new Bow(world.player));
 			world.player.addToInventory(new PowerRod(world.player));
@@ -143,24 +143,24 @@ public class MapReader {
 					break;
 				}
 			}
-			if(layout[i]!=0&&layout[i]!=0xffffff)
+			if(layout[i]>0&&layout[i]<0xffffff)
 				world.floors.add(new FloorTile(x,y));
-//			if(layout[i]==0)
-//				wallMade=true;
-//			else
-//				wallMade=false;
+			if(layout[i]==0)
+				wallMade=true;
+			else
+				wallMade=false;
 		}
-//		
-//		boolean complete=true;
-//		do{
-//		complete=true;
-//		for(int i=0;i<walls.size()-1;i++){
-//			for(int b=i+1;b<walls.size();b++){
-//				if(walls.get(i).merge(walls.get(b)))
-//					complete=false;
-//			}
-//		}
-//		}while(!complete);
+		
+		boolean complete=true;
+		do{
+		complete=true;
+	for(int i=0;i<walls.size()-1;i++){
+		for(int b=i+1;b<walls.size();b++){
+				if(walls.get(i).merge(walls.get(b)))
+					complete=false;
+			}
+		}
+	}while(!complete);
 		
 		for(Entity e:entities){
 			world.addEntity(e);
@@ -198,7 +198,8 @@ public class MapReader {
 	
 	public static void main(String args[]){
 		
-		SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
+		SoundHandler.playMusic(SoundHandler.SONG_TWO, 6);
+		//SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
 		
 		World w=nextMap();
 		vs=new ViewScreen();
@@ -220,7 +221,7 @@ public class MapReader {
 		}
 		World w=new World();
 		readMap("rooms/level"+level+".png",w);
-		//readMap("rooms/test1.png");
+		//readMap("rooms/test1.png");a
 		return w;
 	}
 	
