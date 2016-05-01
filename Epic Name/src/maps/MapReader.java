@@ -145,22 +145,22 @@ public class MapReader {
 			}
 			if(layout[i]!=0&&layout[i]!=0xffffff)
 				world.floors.add(new FloorTile(x,y));
-//			if(layout[i]==0)
-//				wallMade=true;
-//			else
-//				wallMade=false;
+			if(layout[i]==0)
+				wallMade=true;
+			else
+				wallMade=false;
 		}
-//		
-//		boolean complete=true;
-//		do{
-//		complete=true;
-//		for(int i=0;i<walls.size()-1;i++){
-//			for(int b=i+1;b<walls.size();b++){
-//				if(walls.get(i).merge(walls.get(b)))
-//					complete=false;
-//			}
-//		}
-//		}while(!complete);
+		
+		boolean complete=true;
+		do{
+		complete=true;
+	for(int i=0;i<walls.size()-1;i++){
+		for(int b=i+1;b<walls.size();b++){
+				if(walls.get(i).merge(walls.get(b)))
+					complete=false;
+			}
+		}
+	}while(!complete);
 		
 		for(Entity e:entities){
 			world.addEntity(e);
@@ -198,7 +198,7 @@ public class MapReader {
 	
 	public static void main(String args[]){
 		
-		SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
+		//SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
 		
 		World w=nextMap();
 		vs=new ViewScreen();
