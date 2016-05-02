@@ -106,20 +106,20 @@ public class MapReader {
 			
 			switch(layout[i]){
 				case 0:{
-					if(wallMade&&x!=0){
-						Polygon r=lastWall.getRect();
-						lastWall.setRect(lastWall.x,lastWall.y,lastWall.width+40,lastWall.height);
-					}
-					else{
+//					if(wallMade&&x!=0){
+//						Polygon r=lastWall.getRect();
+//						lastWall.setRect(lastWall.x,lastWall.y,lastWall.width+40,lastWall.height);
+//					}
+//					else{
 						lastWall=new BlockWall(x,y,40,40);
 						walls.add(lastWall);
-					}
+//					}
 					break;
 				}
 				
 				case 0xff0000:{
 					world.player.position=new Vector2D(x+20,y+20);
-					entities.add(world.player);
+					world.addEntity(world.player);
 					break;
 				}
 				case 0x00ff00:{
@@ -151,20 +151,17 @@ public class MapReader {
 				wallMade=false;
 		}
 		
-		boolean complete=true;
-		do{
-		complete=true;
-	for(int i=0;i<walls.size()-1;i++){
-		for(int b=i+1;b<walls.size();b++){
-				if(walls.get(i).merge(walls.get(b)))
-					complete=false;
-			}
-		}
-	}while(!complete);
+//		boolean complete=true;
+//		do{
+//			complete=true;
+//			for(int i=0;i<walls.size()-1;i++){
+//				for(int b=i+1;b<walls.size();b++){
+//					if(walls.get(i).merge(walls.get(b)))
+//						complete=false;
+//				}
+//			}
+//		}while(!complete);
 		
-		for(Entity e:entities){
-			world.addEntity(e);
-		}
 		for(BlockWall e:walls){
 			if(e.width!=0){
 				world.addWall(e);
