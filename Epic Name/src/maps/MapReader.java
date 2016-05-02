@@ -111,11 +111,10 @@ public class MapReader {
 //						Polygon r=lastWall.getRect();
 //						lastWall.setRect(lastWall.x,lastWall.y,lastWall.width+40,lastWall.height);
 //					}
-//					else
-					{
+//					else{
 						lastWall=new BlockWall(x,y,40,40);
 						walls.add(lastWall);
-					}
+//					}
 					break;
 				}
 				
