@@ -24,9 +24,9 @@ public class Sword extends Weapon{
 	
 	public Sword(GameAgent owner) {
 		super(owner,new AttackInfo[]{
-			new MeleeAttackInfo(new Swing(new Polygon(new double[]{15,45,15},new double[]{5,5,-5},0,0),-Math.PI,20),new DieRoll(3,2),"str","str"),
-			new MeleeAttackInfo(new Stab(new Polygon(new double[]{15,45,15},new double[]{5,5,-5}),20,12),new DieRoll(3,2),"str","str"),
-			new MeleeAttackInfo(new Swing(new Polygon(new double[]{15,45,15},new double[]{5,5,-5}),Math.PI,20),new DieRoll(3,2),"str","str")
+			new MeleeAttackInfo(new Swing(new Polygon(new double[]{15,55,60,55,15},new double[]{5,5,0,-5,-5},0,0),-Math.PI,20),new DieRoll(3,2),"str","str"),
+			new MeleeAttackInfo(new Stab(new Polygon(new double[]{15,55,60,55,15},new double[]{5,5,0,-5,-5}),20,12),new DieRoll(3,2),"str","str"),
+			new MeleeAttackInfo(new Swing(new Polygon(new double[]{15,55,60,55,15},new double[]{5,5,0,-5,-5}),Math.PI,20),new DieRoll(3,2),"str","str")
 		});
 		try {
 			image = ImageIO.read(new File("res/sword.png"));

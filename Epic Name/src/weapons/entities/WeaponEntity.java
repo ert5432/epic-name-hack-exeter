@@ -65,6 +65,10 @@ public abstract class WeaponEntity extends GameEntity{
 		return coolDown;
 	}
 	
+	public int getDuration(){
+		return duration;
+	}
+	
 	public void updateLastHit(){
 		lastHit=world.findAllIntersectedAgents(shape, owner);
 	}

@@ -61,16 +61,15 @@ public class Wall implements Renderable{
 		for(int i=x;i<x+width;i+=40){
 			for(int j=y;j<y+height;j+=40){
 				g2d.scale(2.5, 2.5);
-<<<<<<< HEAD
 				g2d.drawImage(image,(int)(i/2.5),(int) (j/2.5), null);
-=======
 				g2d.drawImage(image, (int)(i/2.5), (int)(j/2.5), null);
->>>>>>> branch 'master' of https://github.com/pminch/epic-name-hack-exeter
 				g2d.scale(1/2.5, 1/2.5);
 			}
 		}*/
 		g.setColor(Color.black);
 		shape.render(g);
+		g.setColor(color.white);
+		((Graphics2D)g).draw(shape.toArea());
 	}
 	
 	public Shape getShape(){

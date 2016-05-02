@@ -24,9 +24,10 @@ public class RangedProjectile extends Projectile{
 		super(owner.position.add(relativePosition),direction,maxSpeed,shape, world,owner,coolDown,flyTime,damage);
 		this.accuracyRange=accuracyRange;
 		this.maxVelocity=maxSpeed;
-		heading=direction.clone();
+		setHeading(direction.clone());
 		shape.rotate(-heading.angleTo(new Vector2D(1,0)));
 		velocity=heading.mult(maxSpeed);
+		
 	}
 
 	public RangedProjectile(Vector2D relativePosition,Shape shape,double maxSpeed,

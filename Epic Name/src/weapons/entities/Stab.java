@@ -26,6 +26,7 @@ public class Stab extends MeleeEntity{
 	public Stab(Shape shape, World world,double stabLength,int stabDuration,GameAgent owner,int damage) {
 		super(owner.position, shape, world,owner,stabDuration+10,stabDuration,damage,Color.green);
 		shape.rotate(new Vector2D(1,0).angleTo(owner.heading));
+		setHeading(heading.rotate(new Vector2D(1,0).angleTo(owner.heading)));
 		this.stabLength=stabLength;
 		this.stabDuration=stabDuration;
 		stabTimer=0;
@@ -71,7 +72,7 @@ public class Stab extends MeleeEntity{
 			
 			
 			
-			g2d.drawImage(image,(int)((position.x)/3.0),(int)((position.y+10)/3.0),null);
+			g2d.drawImage(image,(int)((position.x-6)/3.0),(int)((position.y+10)/3.0),null);
 			
 			
 		} catch (IOException e) {

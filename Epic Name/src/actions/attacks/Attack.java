@@ -14,7 +14,7 @@ public abstract class Attack extends Action{
 	DieRoll dice;
 	String primary;
 	String secondary;
-	public static final int MIN_COOLDOWN=10;
+	public int MIN_COOLDOWN=10;
 	
 	public Attack(WeaponEntity a,DieRoll d,String primaryStat,String secondaryStat,GameAgent doer,World world){
 		super(doer,world);

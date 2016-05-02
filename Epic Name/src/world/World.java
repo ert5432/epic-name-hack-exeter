@@ -2,12 +2,14 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import maps.MapReader;
 import weapons.entities.Projectile;
 import entities.Entity;
 import entities.GameAgent;
+import entities.GameEntity;
 import entities.Player;
 import entities.StateAgent;
 import geometry.Circle;
@@ -141,13 +143,17 @@ public class World implements Renderable{
 	public void handleCollisions(GameAgent agent,double time){
 		Vector2D agentNormal=intersectAgentNormal(agent.shape.clone(),agent);
 		if(agentNormal!=null){
-			Vector2D agentForce=agentNormal.normalize().mult(Math.abs(agent.getVelocity().add(agent.acceleration.mult(time)).dot(agentNormal.negative()))/agentNormal.magnitude()*agent.mass*1);
-			agent.applyForce(agentForce);
+			Vector2D agentImpulse=agentNormal.normalize().mult(Math.abs(agent.getVelocity().dot(agentNormal.negative()))/agentNormal.magnitude()*1);
+			agent.applyImpulse(agentImpulse);
 		}
 		Vector2D wallNormal=intersectsWallNormal(agent.shape.translate(agent.velocity));
 		if(wallNormal!=null){
-			Vector2D wallForce=wallNormal.normalize().mult(Math.abs(agent.velocity.add(agent.acceleration.mult(time)).dot(wallNormal.negative()))/wallNormal.magnitude()*agent.mass*1);
-			agent.applyForce(wallForce);
+			Vector2D wallImpulse=wallNormal.normalize().mult(Math.abs(agent.velocity.dot(wallNormal.negative()))/wallNormal.magnitude()*1);
+			if(agent.velocity.add(wallImpulse).magnitude()>1000)
+				System.out.println("ahhh");
+			
+			agent.applyImpulse(wallImpulse);
+			
 		}
 	}
 	
@@ -164,15 +170,22 @@ public class World implements Renderable{
 		for(Wall w:walls){
 			w.render(g);
 		}
-		//System.out.println("full time - "+(System.nanoTime()-start));
-		start=System.nanoTime();
-		//new Circle(200,200,20).render(g);
-		//System.out.println("for circle - "+(System.nanoTime()-start));
 		
 	}
 
 	public void removeEntity(Entity e) {
 		entities.remove(e);
+	}
+	
+	public void renderDebug(Graphics g){
+		for(Entity e:entities){
+			if(e instanceof Renderable){
+				if(e instanceof GameEntity){
+					g.setColor(((GameEntity) e).c);
+					((Graphics2D)g).draw(((GameEntity) e).shape.toArea());
+				}
+			}
+		}
 	}
 
 	
