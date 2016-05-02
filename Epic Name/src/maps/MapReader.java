@@ -88,8 +88,9 @@ public class MapReader {
 		int width=layout[layout.length-2];
 		int height=layout[layout.length-1];
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
+		
 		if(world.player==null){
-			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,1000));
+			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,500));
 			world.player.addToInventory(new Sword(world.player));
 			world.player.addToInventory(new Bow(world.player));
 			world.player.addToInventory(new PowerRod(world.player));
@@ -118,7 +119,7 @@ public class MapReader {
 				
 				case 0xff0000:{
 					world.player.position=new Vector2D(x+20,y+20);
-					world.addEntity(world.player);
+					entities.add(world.player);
 					break;
 				}
 				case 0x00ff00:{
@@ -152,15 +153,18 @@ public class MapReader {
 		
 		boolean complete=true;
 		do{
-			complete=true;
-			for(int i=0;i<walls.size()-1;i++){
-				for(int b=i+1;b<walls.size();b++){
-					if(walls.get(i).merge(walls.get(b)))
-						complete=false;
-				}
+		complete=true;
+	for(int i=0;i<walls.size()-1;i++){
+		for(int b=i+1;b<walls.size();b++){
+				if(walls.get(i).merge(walls.get(b)))
+					complete=false;
 			}
-		}while(!complete);
+		}
+	}while(!complete);
 		
+		for(Entity e:entities){
+			world.addEntity(e);
+		}
 		for(BlockWall e:walls){
 			if(e.width!=0){
 				world.addWall(e);
@@ -194,6 +198,9 @@ public class MapReader {
 	
 	public static void main(String args[]){
 		
+		SoundHandler.playMusic(SoundHandler.SONG_TWO, 6);
+		//SoundHandler.playMusic(SoundHandler.SONG_ONE, 6);
+		
 		World w=nextMap();
 		vs=new ViewScreen();
 		JFrame frame=new JFrame("Test");
@@ -214,7 +221,7 @@ public class MapReader {
 		}
 		World w=new World();
 		readMap("rooms/level"+level+".png",w);
-		//readMap("rooms/test1.png");
+		//readMap("rooms/test1.png");a
 		return w;
 	}
 	
