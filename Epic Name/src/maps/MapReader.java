@@ -120,7 +120,7 @@ public class MapReader {
 				
 				case 0xff0000:{
 					world.player.position=new Vector2D(x+20,y+20);
-					entities.add(world.player);
+					world.addEntity(world.player);
 					break;
 				}
 				case 0x00ff00:{
@@ -154,18 +154,24 @@ public class MapReader {
 		
 //		boolean complete=true;
 //		do{
-//		complete=true;
-//	for(int i=0;i<walls.size()-1;i++){
-//		for(int b=i+1;b<walls.size();b++){
-//				if(walls.get(i).merge(walls.get(b)))
-//					complete=false;
+//			complete=true;
+//			for(int i=0;i<walls.size()-1;i++){
+//				for(int b=i+1;b<walls.size();b++){
+//					if(walls.get(i).merge(walls.get(b)))
+//						complete=false;
+//				}
 //			}
+<<<<<<< HEAD
 //		}
 //	}while(!complete);
 //		
 //		for(Entity e:entities){
 //			world.addEntity(e);
 //		}
+=======
+//		}while(!complete);
+		
+>>>>>>> branch 'master' of https://github.com/pminch/epic-name-hack-exeter
 		for(BlockWall e:walls){
 			if(e.width!=0){
 				world.addWall(e);

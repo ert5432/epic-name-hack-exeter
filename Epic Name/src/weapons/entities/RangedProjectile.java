@@ -69,7 +69,7 @@ public class RangedProjectile extends Projectile{
 			
 			
 			
-			g2d.drawImage(image,(int)((position.x)/2.0),(int)((position.y-5)/2.0),null);
+			g2d.drawImage(image,(int)((position.x+15)/2.0),(int)((position.y-5)/2.0),null);
 			
 			
 		} catch (IOException e) {
