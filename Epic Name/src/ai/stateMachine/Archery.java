@@ -25,6 +25,7 @@ public class Archery extends State {
 	@Override
 	public void execute() {
 		if(agent.position.distanceTo(target.position)<300){
+			//agent.rotation=agent.position.angleTo(target.getPosition());
 			if(agent.canAct())
 				agent.act(1);
 		}

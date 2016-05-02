@@ -94,6 +94,7 @@ public class MapReader {
 			world.player.addToInventory(new Sword(world.player));
 			world.player.addToInventory(new Bow(world.player));
 			world.player.addToInventory(new PowerRod(world.player));
+			world.addEntity(world.player);
 			}
 		
 		ArrayList<BlockWall> walls= new ArrayList<BlockWall>();
@@ -166,13 +167,13 @@ public class MapReader {
 //		for(Entity e:entities){
 //			world.addEntity(e);
 //		}
-//		for(BlockWall e:walls){
-//			if(e.width!=0){
-//				world.addWall(e);
-//				e.setRect(e.x+dx, e.y+dy, e.width, e.height);
-//			}
+		for(BlockWall e:walls){
+			if(e.width!=0){
+				world.addWall(e);
+				e.setRect(e.x+dx, e.y+dy, e.width, e.height);
+			}
 		}
-//	}
+	}
 	
 	public static void spawnMonster(int x,int y,int id,World world){
 		GameAgent monster = null;

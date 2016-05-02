@@ -39,6 +39,35 @@ public class Goblin extends StateAgent{
 		
 	}
 	
+	public void rotateHeadingtoVelocity(double time){
+		if(!velocity.isZeroed()){
+		if(velocity.magnitudeSq()<0.01)
+			return;
+		double theta=heading.angleTo(velocity);
+		if(Math.abs(theta)<0.00001||Double.isNaN(theta)){
+			return;
+		}
+		if(Math.abs(theta)>maxTurnSpeed*time){
+			theta=maxTurnSpeed*Math.signum(theta)*time;
+		}
+		setHeading(heading.rotate(theta));
+		shape.rotate(theta);
+		}
+		else{
+			if(velocity.magnitudeSq()<0.01)
+				return;
+			double theta=position.angleTo(world.player.getPosition());
+			if(Math.abs(theta)<0.00001||Double.isNaN(theta)){
+				return;
+			}
+			if(Math.abs(theta)>maxTurnSpeed*time){
+				theta=maxTurnSpeed*Math.signum(theta)*time;
+			}
+			setHeading(heading.rotate(theta));
+			shape.rotate(theta);
+		}
+	}
+	
 	public void render(Graphics g){
 		//super.render(g);
 		

@@ -88,6 +88,7 @@ public class GameAgent extends GameEntity{
 	}
 	
 	public void rotateHeadingtoVelocity(double time){
+		if(!velocity.isZeroed()){
 		if(velocity.magnitudeSq()<0.01)
 			return;
 		double theta=heading.angleTo(velocity);
@@ -99,6 +100,7 @@ public class GameAgent extends GameEntity{
 		}
 		setHeading(heading.rotate(theta));
 		shape.rotate(theta);
+		}
 	}
 	
 	public void addCoolDown(int c){
