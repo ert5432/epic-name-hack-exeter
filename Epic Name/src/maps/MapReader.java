@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import sound.SoundHandler;
 import stats.Stats;
 import entities.Ant;
 import entities.Beholder;
@@ -141,24 +142,24 @@ public class MapReader {
 					break;
 				}
 			}
-			if(layout[i]!=0&&layout[i]!=0xffffff)
+			if(layout[i]>0&&layout[i]<0xffffff)
 				world.floors.add(new FloorTile(x,y));
-//			if(layout[i]==0)
-//				wallMade=true;
-//			else
-//				wallMade=false;
+			if(layout[i]==0)
+				wallMade=true;
+			else
+				wallMade=false;
 		}
-//		
-//		boolean complete=true;
-//		do{
-//		complete=true;
-//		for(int i=0;i<walls.size()-1;i++){
-//			for(int b=i+1;b<walls.size();b++){
-//				if(walls.get(i).merge(walls.get(b)))
-//					complete=false;
-//			}
-//		}
-//		}while(!complete);
+		
+		boolean complete=true;
+		do{
+			complete=true;
+			for(int i=0;i<walls.size()-1;i++){
+				for(int b=i+1;b<walls.size();b++){
+					if(walls.get(i).merge(walls.get(b)))
+						complete=false;
+				}
+			}
+		}while(!complete);
 		
 		for(BlockWall e:walls){
 			if(e.width!=0){
