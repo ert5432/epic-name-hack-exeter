@@ -67,7 +67,7 @@ public class Swing extends MeleeEntity {
 			
 			
 			
-			g2d.drawImage(image,(int)((position.x)/3.0),(int)((position.y+10)/3.0),null);
+			g2d.drawImage(image,(int)((position.x-6)/3.0),(int)((position.y+10)/3.0),null);
 			
 			
 		} catch (IOException e) {

@@ -87,7 +87,6 @@ public class MapReader {
 		int width=layout[layout.length-2];
 		int height=layout[layout.length-1];
 		layout=Arrays.copyOfRange(layout, 0, layout.length-2);
-		
 		if(world.player==null){
 			world.player=new Player(0,0,new Circle(20),world,new Stats(30,30,15,15,1000));
 			world.player.addToInventory(new Sword(world.player));
@@ -118,7 +117,7 @@ public class MapReader {
 				
 				case 0xff0000:{
 					world.player.position=new Vector2D(x+20,y+20);
-					entities.add(world.player);
+					world.addEntity(world.player);
 					break;
 				}
 				case 0x00ff00:{
@@ -161,9 +160,6 @@ public class MapReader {
 //		}
 //		}while(!complete);
 		
-		for(Entity e:entities){
-			world.addEntity(e);
-		}
 		for(BlockWall e:walls){
 			if(e.width!=0){
 				world.addWall(e);

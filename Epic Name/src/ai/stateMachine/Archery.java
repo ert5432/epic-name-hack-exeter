@@ -24,8 +24,9 @@ public class Archery extends State {
 
 	@Override
 	public void execute() {
-		if(agent.canAct()&&agent.position.distanceTo(target.position)<300){
-			agent.act(1);
+		if(agent.position.distanceTo(target.position)<300){
+			if(agent.canAct())
+				agent.act(1);
 		}
 		else{
 			SteeringOutput output=steer.getSteering();

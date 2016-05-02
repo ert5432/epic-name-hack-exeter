@@ -1,5 +1,7 @@
 package world;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import geometry.Polygon;
@@ -39,5 +41,13 @@ public class BlockWall extends Wall{
 			return true;
 		}
 		return false;
+	}
+	
+	public void render(Graphics g){
+		Graphics2D g2d=(Graphics2D)g;
+		g2d.scale(2.5, 2.5);
+		g2d.drawImage(image,(int)(x/2.5),(int) (y/2.5), null);
+		g2d.drawImage(image, (int)(x/2.5), (int)(y/2.5), null);
+		g2d.scale(1/2.5, 1/2.5);
 	}
 }

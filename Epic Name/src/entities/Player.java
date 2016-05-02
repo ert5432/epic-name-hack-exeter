@@ -11,6 +11,7 @@ import graphics.*;
 
 import stats.Stats;
 import weapons.Weapon;
+import geometry.Circle;
 import geometry.Shape;
 import geometry.Vector2D;
 import world.World;
@@ -30,15 +31,15 @@ public class Player extends GameAgent{
 	
 	public Weapon[] inventory=new Weapon[4];
 	
-	public Player(Vector2D position,Shape shape,World world,Stats stats){
-		super(position,shape,world,stats);
+	public Player(Vector2D position,World world,Stats stats){
+		super(position,new Circle(28),world,stats);
 		target=null;
 		standingAnim.start();
 		walkingAnim.start();
 	}
 	
 	public Player(double x,double y,Shape shape,World world,Stats stats){
-		super(x,y,shape,world,stats);
+		super(x,y,new Circle(20),world,stats);
 		target=null;
 		standingAnim.start();
 		walkingAnim.start();

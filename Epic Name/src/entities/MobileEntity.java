@@ -53,6 +53,10 @@ public class MobileEntity extends PositionEntity{
 		acceleration.iadd(force.div(mass));
 	}
 	
+	public void applyImpulse(Vector2D impulse){
+		velocity.iadd(impulse);
+	}
+	
 	public double getMass(){
 		return mass;
 	}

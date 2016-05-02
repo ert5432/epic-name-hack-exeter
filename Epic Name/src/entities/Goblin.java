@@ -23,7 +23,7 @@ public class Goblin extends StateAgent{
 	private Animation walkingAnim = new Animation(walking, 15);
 	
 	public Goblin(double x, double y, World world, Stats stats) {
-		super(x, y, new Circle(32), world, stats);
+		super(x, y, new Circle(20), world, stats);
 		// TODO Auto-generated constructor stub
 		
 		walkingAnim.start();

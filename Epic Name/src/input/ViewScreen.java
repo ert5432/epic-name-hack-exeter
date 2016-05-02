@@ -67,9 +67,9 @@ public class ViewScreen extends JPanel implements ActionListener{
 	Player g2;
 	GameAgent g3;
 	
-	
-	
-	private Behavior steer;
+	private boolean debuging=false;
+	private boolean paused=false;
+	private Timer timer;
 //	JFrame f;
 	public static final double fps=100;
 	
@@ -104,12 +104,12 @@ public class ViewScreen extends JPanel implements ActionListener{
 		world.addWall(new Wall(new Rectangle(-10,475,20,950)));
 		world.addWall(new Wall(new Rectangle(1510,475,20,950)));
 		world.addWall(new Wall(new Rectangle(750,960,1500,20)));
-   		world.player=new Player(new Vector2D(500,500),new Circle(20), world, new Stats(30,30,40,40,100000));
+   		world.player=new Player(new Vector2D(500,500),world, new Stats(30,30,40,40,100000));
 		world.addEntity(world.player);
 		world.player.addToInventory(new Sword(world.player));
 		world.player.addToInventory(new Bow(world.player));
 		world.player.addToInventory(new PowerRod(world.player));
-		g2=new Player(new Vector2D(700,500), new Circle(20), world, new Stats(30,0,30,30,100)){
+		g2=new Player(new Vector2D(700,500), world, new Stats(30,0,30,30,100)){
 			public void update(double time){
 				super.update(time);
 				this.setTarget(new Vector2D(input.getMouseX(),input.getMouseY()));
@@ -149,8 +149,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 		w=new Rectangle(750,880,1400,40);
 		printRect(w);
 		new WallMaker().start();
-		Timer t=new Timer((int) (1000/fps),this);
-		t.start();
+		timer=new Timer((int) (1000/fps),this);
+		timer.start();
 		addAction(KeyEvent.VK_W, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
 				world.player.move(new Vector2D(0,-1).mult(world.player.getMaxAcceleration()));
@@ -172,24 +172,20 @@ public class ViewScreen extends JPanel implements ActionListener{
 				world.player.move(new Vector2D(1,0).mult(world.player.getMaxAcceleration()));
 			}
 		});
-		addAction(KeyEvent.VK_UP, new AbstractAction(){
+		addAction(KeyEvent.VK_Z, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g2.move(new Vector2D(0,-1).mult(g2.getMaxAcceleration()));
+				world.player.act(0);
 			}
 		});
-		addAction(KeyEvent.VK_DOWN, new AbstractAction(){
+		addAction(KeyEvent.VK_X, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g2.move(new Vector2D(0,1).mult(g2.getMaxAcceleration()));
+				world.player.act(1);
+				System.out.println("gwt");
 			}
 		});
-		addAction(KeyEvent.VK_LEFT, new AbstractAction(){
+		addAction(KeyEvent.VK_C, new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				g2.move(new Vector2D(-1,0).mult(g2.getMaxAcceleration()));
-			}
-		});
-		addAction(KeyEvent.VK_RIGHT, new AbstractAction(){
-			public void actionPerformed(ActionEvent e) {
-				g2.move(new Vector2D(1,0).mult(g2.getMaxAcceleration()));
+				world.player.act(2);
 			}
 		});
 		addAction(Input.MOUSE_BUTTON1, new AbstractAction(){
@@ -217,16 +213,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 				world.player.act(4);
 			}
 		});
-		addAction(KeyEvent.VK_SPACE,new AbstractAction(){
-			public void actionPerformed(ActionEvent arg0) {
-				g2.act(1);
-			}
-		});
-		addAction(KeyEvent.VK_SLASH,new AbstractAction(){
-			public void actionPerformed(ActionEvent arg0) {
-				g2.act(0);
-			}
-		});
+	
 		addAction(KeyEvent.VK_1,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				hotBarSelected=0;
@@ -251,6 +238,16 @@ public class ViewScreen extends JPanel implements ActionListener{
 				world.player.setWeapon(world.player.inventory[3]);
 			}
 		});
+		addAction(KeyEvent.VK_F1,new AbstractAction(){
+			public void actionPerformed(ActionEvent arg0) {
+				debuging=!debuging;
+			}
+		});
+		addAction(KeyEvent.VK_F2,new AbstractAction(){
+			public void actionPerformed(ActionEvent arg0) {
+				paused=!paused;
+			}
+		});
 	}
 	
 	public static void main(String[] args){
@@ -268,6 +265,8 @@ public class ViewScreen extends JPanel implements ActionListener{
 		System.out.println("hi");
 		g2d.translate(750-world.player.getPosition().x, 475-world.player.getPosition().y);
 		world.render(g);
+		if(debuging)
+			world.renderDebug(g);
 		g2d.translate(-750+world.player.getPosition().x, -475+world.player.getPosition().y);
 		
 		g.setColor(Color.white);
@@ -313,6 +312,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 		if(world.player!=null)
 			world.player.setTarget(new Vector2D(input.getMouseX()-750+world.player.getPosition().x,input.getMouseY()-475+world.player.getPosition().y));
 		long start=System.nanoTime();
+		if(!paused)
 		world.update((int)(1000/fps)/10);
 		long time=System.nanoTime()-start;
 		totalUpdate+=time;
