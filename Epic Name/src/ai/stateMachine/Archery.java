@@ -9,6 +9,7 @@ public class Archery extends State {
 
 	GameAgent target;
 	Behavior steer;
+	public int range=300;
 	
 	public Archery(GameAgent agent, StateMachine sm,GameAgent target) {
 		super(agent, sm);
@@ -24,8 +25,8 @@ public class Archery extends State {
 
 	@Override
 	public void execute() {
-		if(agent.position.distanceTo(target.position)<300){
-			//agent.rotation=agent.position.angleTo(target.getPosition());
+		if(agent.position.distanceTo(target.position)<range){
+			agent.setHeading(target.getPosition().sub(agent.getPosition()));
 			if(agent.canAct())
 				agent.act(1);
 		}
