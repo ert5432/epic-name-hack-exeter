@@ -129,7 +129,7 @@ public class World implements Renderable{
 		for(Entity e:entities){
 			if(e instanceof GameAgent){
 				GameAgent a=(GameAgent)e;
-				if(a!=agent&&a.contains(shape)){
+				if(a!=agent&&!a.phasing&&a.contains(shape)){
 					resultingNormal.iadd(agent.position.sub(a.position));
 				}
 			}

@@ -39,7 +39,7 @@ public class Beholder extends StateAgent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		g2d.drawImage(image, (int) ((position.x - 20) / 4.0), (int) ((position.y - 24) / 4.0), null);
+		g2d.drawImage(image, (int) ((position.x - 30) / 4.0), (int) ((position.y - 30) / 4.0), null);
 		
 		g2d.scale(.25, .25);
 		g2d.rotate(-rotation,position.x,position.y);

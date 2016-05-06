@@ -49,12 +49,6 @@ public class Player extends GameAgent{
 		standingAnim.update();
 		walkingAnim.update();
 		super.update(time);
-		/*if(velocity.magnitude()>1){
-			applyForce(velocity.normalize().negative().mult(mass));
-		}
-		else if(!velocity.isZeroed()){
-			velocity.zero();
-		}*/
 	}
 
 	public void rotateHeadingtoVelocity(double time){
@@ -78,7 +72,6 @@ public class Player extends GameAgent{
 	
 	public void render(Graphics g){
 		//super.render(g);
-		
 	
 		Graphics2D g2d = (Graphics2D)(g);
 		g2d.rotate(rotation,position.x,position.y);

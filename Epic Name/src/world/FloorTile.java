@@ -28,7 +28,7 @@ public class FloorTile {
 	public void render(Graphics g){
 		Graphics2D g2d = (Graphics2D)g;
 
-		g2d.drawImage(image,x,y,32,32,null);
+		g2d.drawImage(image,x,y,40,40,null);
 		
 
 	}

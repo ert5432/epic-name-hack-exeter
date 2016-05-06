@@ -24,6 +24,7 @@ public class GameAgent extends GameEntity{
 	private ActionInfo[] actionList=new ActionInfo[0];
 	protected Action curAction=null;
 	private boolean dead;
+	public boolean phasing=false;
 	
 	public GameAgent(Vector2D position,Shape shape,World world,Stats stats){
 		super(position,shape,world,5,normalMaxSpeed,normalMaxTurnSpeed,
@@ -70,7 +71,8 @@ public class GameAgent extends GameEntity{
 	}
 	
 	public void update(double time){
-		world.handleCollisions(this,time);
+		if(!phasing)
+			world.handleCollisions(this,time);
 		
 		super.update(time);
 		shape.setPosition(position);

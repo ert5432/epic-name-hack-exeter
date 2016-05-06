@@ -28,6 +28,7 @@ import ai.stateMachine.Charging;
 import ai.stateMachine.StateMachine;
 import ai.steering.Behavior;
 import ai.steering.Path;
+import entities.Beholder;
 import entities.GameAgent;
 import entities.GoblinFighter;
 import entities.Player;
@@ -117,7 +118,7 @@ public class ViewScreen extends JPanel implements ActionListener{
 		};
 		g2.setWeapon(new PowerRod(world.player));
 		world.addEntity(g2);
-		g3=new GoblinFighter(600,600,world);
+		g3=new Beholder(600,600,world);
 		g3.setWeapon(new Sword(g3));
 		
 		StateMachine sm=((StateAgent)g3).getStateMachine();
@@ -246,6 +247,11 @@ public class ViewScreen extends JPanel implements ActionListener{
 		addAction(KeyEvent.VK_F2,new AbstractAction(){
 			public void actionPerformed(ActionEvent arg0) {
 				paused=!paused;
+			}
+		});
+		addAction(KeyEvent.VK_F3,new AbstractAction(){
+			public void actionPerformed(ActionEvent arg0) {
+				world.player.phasing=!world.player.phasing;
 			}
 		});
 	}

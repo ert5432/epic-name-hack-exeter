@@ -102,8 +102,8 @@ public class MapReader {
 		BlockWall lastWall=new BlockWall(0,0,0,0);
 		boolean wallMade=false;
 		for(int i=0;i<layout.length;i++){
-			int x=(i%width)*32;
-			int y=(i/width)*32;
+			int x=(i%width)*40;
+			int y=(i/width)*40;
 			
 			switch(layout[i]){
 				case 0:{
@@ -112,7 +112,7 @@ public class MapReader {
 //						lastWall.setRect(lastWall.x,lastWall.y,lastWall.width+40,lastWall.height);
 //					}
 //					else{
-						lastWall=new BlockWall(x,y,32,32);
+						lastWall=new BlockWall(x,y,40,40);
 						walls.add(lastWall);
 //					}
 					break;
@@ -164,9 +164,6 @@ public class MapReader {
 //		}
 //	}while(!complete);
 //		
-		for(Entity e:entities){
-			world.addEntity(e);
-		}
 
 //		}while(!complete);
 		
