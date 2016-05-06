@@ -72,7 +72,7 @@ public class Wall implements Renderable{
 		((Graphics2D)g).draw(shape.toArea());
 	}
 	
-	public Shape getShape(){
+	public Polygon getShape(){
 		return shape;
 	}
 	

@@ -15,6 +15,7 @@ import world.World;
 
 public class GameAgent extends GameEntity{
 
+	
 	public static final double normalMaxSpeed=3,normalMaxTurnSpeed=Math.PI/36,normalMaxForce=15;
 	private double id;
 	protected int coolDown;

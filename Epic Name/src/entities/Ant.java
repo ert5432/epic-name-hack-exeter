@@ -34,7 +34,7 @@ public class Ant extends StateAgent{
 		standingAnim.start();
 		setWeapon(new PowerRod(this));
 		StateMachine sm=getStateMachine();
-		sm.changeState(new WaitForPlayer(this,sm,world.player));
+		sm.changeState(new WaitForPlayer(this,sm,world.player,100));
 	}
 	
 	public void update(double time){

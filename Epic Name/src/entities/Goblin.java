@@ -29,7 +29,7 @@ public class Goblin extends StateAgent{
 		walkingAnim.start();
 		standingAnim.start();
 		StateMachine sm=getStateMachine();
-		sm.changeState(new WaitForPlayer(this,sm,world.player));
+		sm.changeState(new WaitForPlayer(this,sm,world.player,300));
 	}
 	
 	public void update(double time){
