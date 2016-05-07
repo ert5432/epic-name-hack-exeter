@@ -9,6 +9,7 @@ public class Charging extends State {
 
 	GameAgent target;
 	Behavior steer;
+	public int range=100;
 	
 	public Charging(GameAgent agent, StateMachine sm,GameAgent target) {
 		super(agent, sm);
@@ -26,11 +27,12 @@ public class Charging extends State {
 	public void execute() {
 		SteeringOutput output=steer.getSteering();
 		agent.move(output.linear);
-		if(agent.canAct()&&agent.position.distanceTo(target.position)<100){
+		agent.turn(output.angular);
+		if(agent.canAct()&&agent.position.distanceTo(target.position)<range){
 			agent.act(1);
 		}
 		if(agent.position.distanceTo(target.position)>1000){
-			sm.changeState(new WaitForPlayer(agent,sm,target));
+			sm.changeState(new WaitForPlayer(agent,sm,target,range));
 		}
 	}
 

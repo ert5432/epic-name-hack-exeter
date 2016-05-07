@@ -24,5 +24,9 @@ public class StateAgent extends GameAgent {
 	public StateMachine getStateMachine(){
 		return sm;
 	}
+	
+	public void rotateHeadingToVelocity(){
+		
+	}
 
 }

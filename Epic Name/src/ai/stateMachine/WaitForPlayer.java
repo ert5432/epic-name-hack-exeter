@@ -51,6 +51,11 @@ public class WaitForPlayer extends State {
 				arch.range=range;
 				sm.changeState(arch);
 			}
+			else if(!agent.getWeapon().isRanged()&&seenTarget){
+				Charging charge=new Charging(agent,sm,target);
+				charge.range=range;
+				sm.changeState(charge);
+			}
 		}
 	}
 

@@ -49,6 +49,15 @@ public class Player extends GameAgent{
 		standingAnim.update();
 		walkingAnim.update();
 		super.update(time);
+		
+		if(target!=null){
+			Vector2D targetHeading=target.sub(position);
+			double theta=heading.angleTo(targetHeading);
+			if(Math.abs(theta)<0.00001||Double.isNaN(theta)){
+				return;
+			}
+			turn(theta);
+		}
 	}
 
 	public void rotateHeadingtoVelocity(double time){

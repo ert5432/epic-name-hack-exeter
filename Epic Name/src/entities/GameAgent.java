@@ -168,6 +168,17 @@ public class GameAgent extends GameEntity{
 			applyForce(move.mult(mass));
 		}
 	}
+	
+	public void turn(double theta){
+		if(curAction==null||curAction.isMobile()){
+			
+			if(Math.abs(theta)>maxTurnSpeed*World.updateTime){
+				theta=maxTurnSpeed*Math.signum(theta)*World.updateTime;
+			}
+			setHeading(heading.rotate(theta));
+			shape.rotate(theta);
+		}
+	}
 
 	public double getMaxAcceleration() {
 		return maxAcceleration;

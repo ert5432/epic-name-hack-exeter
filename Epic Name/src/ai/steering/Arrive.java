@@ -3,9 +3,8 @@ package ai.steering;
 import entities.GameAgent;
 import geometry.Vector2D;
 
-public class Arrive implements Behavior{
+public class Arrive extends FaceVelocity{
 
-	public GameAgent character;
 	public Vector2D target;
 	
 	public double slowRadius;
@@ -14,7 +13,7 @@ public class Arrive implements Behavior{
 	public double maxSpeed;
 	
 	public Arrive(GameAgent character, Vector2D target) {
-		this.character=character;
+		super(character);
 		this.target=target;
 		slowRadius=5;
 		targetRadius=.5;
@@ -22,7 +21,7 @@ public class Arrive implements Behavior{
 	}
 	
 	public SteeringOutput getSteering(){
-		SteeringOutput output=new SteeringOutput();
+		SteeringOutput output=super.getSteering();
 		Vector2D direction=target.sub(character.position);
 		double distSq=direction.magnitudeSq();
 		System.out.println(target);
@@ -47,18 +46,6 @@ public class Arrive implements Behavior{
 		output.linear=output.linear.truncate(character.getMaxAcceleration());
 		System.out.println(output.linear);
 		return output;
-		//SteeringOutput steering=new SteeringOutput();
-		//Vector2D toTarget=character.getPosition().vectorTo(target);
-		//double dist=toTarget.magnitude();
-		//if(dist>0){
-		//	final double tweaker=4;
-		//	double speed=dist/tweaker;
-		//	speed=Math.min(speed,character.getMaxVelocity());
-		//	Vector2D wantedVelocity=toTarget.div(dist).mult(speed);
-		//	steering.linear=wantedVelocity.sub(character.getVelocity()).truncate(character.getMaxAcceleration());
-		//}
-		//return steering;
-			
 	}
 
 }

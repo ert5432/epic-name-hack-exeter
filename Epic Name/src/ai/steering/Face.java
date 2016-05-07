@@ -24,15 +24,14 @@ public class Face implements Behavior{
 	public SteeringOutput getSteering() {
 		SteeringOutput output=new SteeringOutput();
 		
+		if(character!=null)
+			target=targetCharacter.position;
 		if(target!=null){
-			//output.angular
+			output.angular=character.heading.angleTo(target.sub(character.position));
 		}
 		
-		else{
-			
-		}
 		
-		return null;
+		return output;
 	}
 
 }

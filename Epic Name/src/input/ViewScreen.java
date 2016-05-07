@@ -74,8 +74,6 @@ public class ViewScreen extends JPanel implements ActionListener{
 //	JFrame f;
 	public static final double fps=100;
 	
-	
-	
 	@SuppressWarnings("serial")
 	public ViewScreen(){
 		super();
@@ -149,7 +147,6 @@ public class ViewScreen extends JPanel implements ActionListener{
 		
 		w=new Rectangle(750,880,1400,40);
 		printRect(w);
-		new WallMaker().start();
 		timer=new Timer((int) (1000/fps),this);
 		timer.start();
 		addAction(KeyEvent.VK_W, new AbstractAction(){
@@ -329,20 +326,6 @@ public class ViewScreen extends JPanel implements ActionListener{
 		totalRender+=time;
 		//System.out.println("world render time - "+time);
 		//System.out.println("average render time - "+(totalRender/world.time));
-	}
-	
-	public class WallMaker extends Thread {
-		public void run(){
-			Scanner scan=new Scanner(System.in);
-			while(true){
-				double x1=scan.nextInt();
-				double y1=scan.nextInt();
-				double x2=scan.nextInt();
-				double y2=scan.nextInt();
-				world.addWall(new Wall(new Rectangle((x1+x2)/2,(y1+y2)/2,x2-x1,y2-y1)));
-				System.out.printf("world.addWall(new Wall(new Rectangle(%f, %f, %f, %f)))",(x1+x2)/2,(y1+y2)/2,x2-x1,y2-y1);
-			}
-		}
 	}
 	
 	public static void printRect(Rectangle w){

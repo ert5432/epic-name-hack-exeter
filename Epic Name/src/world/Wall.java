@@ -66,10 +66,10 @@ public class Wall implements Renderable{
 				g2d.scale(1/2.5, 1/2.5);
 			}
 		}*/
-		g.setColor(Color.black);
-		shape.render(g);
-		g.setColor(color.white);
-		((Graphics2D)g).draw(shape.toArea());
+//		g.setColor(Color.black);
+//		shape.render(g);
+//		g.setColor(color.white);
+//		((Graphics2D)g).draw(shape.toArea());
 	}
 	
 	public Polygon getShape(){

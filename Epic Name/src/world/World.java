@@ -25,6 +25,7 @@ public class World implements Renderable{
 	public long time=0;
 	public Player player;
 	public Stairs stairs=new Stairs(0,0);
+	public static double updateTime=0;
 	
 	public World(){
 		entities=new ArrayList<Entity>();
@@ -46,6 +47,7 @@ public class World implements Renderable{
 	
 	public void update(double time){
 		this.time+=time;
+		World.updateTime=time;
 		ArrayList<Entity> temp=new ArrayList<Entity>(entities);
 		for(Entity e:temp){
 			e.update(time);
